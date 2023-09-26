@@ -4,6 +4,12 @@ public class WebUser {
     private int coduser;
     private boolean logged;
 
+
+    public WebUser(int c) {
+        coduser = c;
+        logged = false;
+    }
+
     public boolean getLogged() {
         return logged;
     }
@@ -12,7 +18,7 @@ public class WebUser {
         logged = l;
     }
 
-    public int getCod(){
+    public int getCod() {
         return coduser;
     }
 
