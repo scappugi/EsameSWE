@@ -1,4 +1,4 @@
 package BuisnessLogic;
 
-public class Pantaloni {
+public class Trousers {
 }
