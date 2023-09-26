@@ -21,4 +21,12 @@ public class Order {
         shipped = date;
     }
 
+    public void show(){
+        System.out.println(("id : " + id));
+        System.out.println(("ordered : " + ordered));
+        System.out.println(("shipped : " + shipped));
+        System.out.println(("ship to : " + shipto));
+        System.out.println(("status : " + status));
+    }
+
 }
