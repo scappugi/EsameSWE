@@ -10,12 +10,16 @@ public class PrivateArea {
     public PrivateArea(){
         orders = new ArrayList<>();
     }
-    public void addorder(Order neworder){
+
+    public ArrayList<Order> getOrders(){
+        return orders;
+    }
+    /*public void addorder(Order neworder){
         orders.add(neworder);
     }
     public void showitems(){
         for(int i = 0; i < orders.size(); i++){
             orders.get(i).show();
         }
-    }
+    }*/
 }
