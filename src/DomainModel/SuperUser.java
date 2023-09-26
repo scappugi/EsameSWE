@@ -4,13 +4,13 @@ public class SuperUser extends WebUser {
 
     private static SuperUser istance = null;
 
-    private SuperUser(int c, String u, String p) {
-        super(c, u, p);
+    private SuperUser(int code, String username, String password) {
+        super(code, username, password);
     }
 
-    public static SuperUser getIstance(int c, String u, String p) {
+    public static SuperUser getIstance(int code, String username, String password) {
         if (istance == null)
-            istance = new SuperUser(c, u, p);
+            istance = new SuperUser(code, username, password);
         return istance;
     }
 }
