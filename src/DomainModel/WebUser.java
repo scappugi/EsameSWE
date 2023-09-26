@@ -7,11 +7,18 @@ public class WebUser {
     private String password;
 
 
-    public WebUser(int c, String u, String p) {
+    public WebUser(int c, String u, String p) { //for registered users
         coduser = c;
         logged = false;
         username = u;
         password = p;
+    }
+
+    public WebUser(int c) { //for unregistered users
+        coduser = c;
+        logged = false;
+        username = null;
+        password = null;
     }
 
     public boolean getLogged() {

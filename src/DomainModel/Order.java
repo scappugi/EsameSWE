@@ -1,5 +1,6 @@
 package DomainModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -8,6 +9,7 @@ public class Order {
     private Date shipped; //when the order was shipped
     private String shipto;
     private String status;
+    private Cart cart;
 
     public Order(String id, Date o, String sh, String s) {
         this.id = id;
