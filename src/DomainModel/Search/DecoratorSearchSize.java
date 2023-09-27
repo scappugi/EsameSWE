@@ -4,26 +4,27 @@ import DomainModel.Clothes;
 
 import java.util.ArrayList;
 
-public class DecoratorSearchPrice extends BaseDecoratorSearch {
-    private int maxprice;
+public class DecoratorSearchSize extends BaseDecoratorSearch {
+    private String size;
 
-    public DecoratorSearchPrice(Search search, int mp) {
+    public DecoratorSearchSize(Search search, String size) {
         super(search);
-        maxprice = mp;
+        this.size = size;
     }
+
 
     @Override
     public ArrayList<Clothes> searchClothes() {
         ArrayList<Clothes> basequery = null;
+        ArrayList<Clothes> filtered = new ArrayList<>();
         try {
             basequery = search.searchClothes();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<Clothes> filtered = new ArrayList<>();
 
-        for (Clothes cl : basequery) {
-            if (cl.getPrice() <= maxprice)
+        for(Clothes cl : basequery){
+            if(cl.getSize() == size)
                 filtered.add(cl);
         }
         return filtered;
