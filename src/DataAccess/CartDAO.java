@@ -13,19 +13,18 @@ public class CartDAO {
         return true;
     }
 
-    public boolean modifyCartItem(Clothes clothes){
+    public boolean modifyQuantityCartItem(Clothes clothes, int newquantity){
         return true;
     }
-
-    public boolean searchCartItem(Clothes clothes){
-        return true;
-    }
-
     public boolean viewAllCartItem(Clothes clothes){
         return true;
     }
 
-    public boolean payCartItem(Clothes clothes){
+    public boolean payCartItem(){
         return true;
     }
+
+
 }
+
+
