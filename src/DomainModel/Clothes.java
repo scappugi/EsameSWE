@@ -7,11 +7,31 @@ public class Clothes {
     private String color;
     private String category;
 
-    public Clothes(float p, String b, String s, String co, String ca){
+    public Clothes(float p, String b, String s, String co, String ca) {
         price = p;
         brand = b;
         size = s;
         color = co;
         category = ca;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }
