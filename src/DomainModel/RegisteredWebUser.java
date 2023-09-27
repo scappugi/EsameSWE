@@ -10,7 +10,7 @@ public class RegisteredWebUser extends WebUser{
         cart = new Cart();
     }
 
-    public PrivateArea getPrivateArea(){ //instance to access the private area in order to use it in the business logic
+    public PrivateArea getPrivateArea(){ //instance to access to the private area in order to use it in the business logic
         return privateaerea;
     }
 

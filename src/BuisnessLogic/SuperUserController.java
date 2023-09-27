@@ -1,5 +1,6 @@
 package BuisnessLogic;
 
+import DomainModel.Clothes;
 import DomainModel.SuperUser;
 
 public class SuperUserController {

@@ -1,4 +1,4 @@
-package BuisnessLogic;
+package DomainModel;
 
 public class Shirt {
 }

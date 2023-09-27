@@ -1,9 +1,9 @@
 package DataAccess;
 
-import BuisnessLogic.Clothes;
-import BuisnessLogic.Shirt;
-import BuisnessLogic.Sweatshirt;
-import BuisnessLogic.Trousers;
+import DomainModel.Clothes;
+import DomainModel.Shirt;
+import DomainModel.Sweatshirt;
+import DomainModel.Trousers;
 import DomainModel.WebUser;
 
 import java.util.ArrayList;

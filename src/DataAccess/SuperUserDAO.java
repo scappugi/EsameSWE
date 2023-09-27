@@ -1,6 +1,6 @@
 package DataAccess;
 
-import BuisnessLogic.Clothes;
+import DomainModel.Clothes;
 
 public class SuperUserDAO {
     public SuperUserDAO(){}
