@@ -8,17 +8,17 @@ DROP TABLE IF EXISTS Contains;
 CREATE TABLE WebUser (
     codUser TEXT PRIMARY KEY,
     UserName TEXT,
-    Password TEXT
+    password TEXT
 );
 
 
 CREATE TABLE DebitCard (
     codCard TEXT,
     CVV TEXT,
-    Date DATE,
-    UserID TEXT,
+    date DATE,
+    userID TEXT,
     PRIMARY KEY (codCard, CVV)
-    FOREIGN KEY (UserID) REFERENCES WebUser(codUser)
+    FOREIGN KEY (userID) REFERENCES WebUser(codUser)
 );
 
 CREATE TABLE Factory (
@@ -32,9 +32,9 @@ CREATE TABLE Clothes (
     color TEXT,
     category TEXT,
     brand TEXT,
-    taglia TEXT,
-    StorageID TEXT,
-    FOREIGN KEY (StorageID) REFERENCES Storage(codStorage)
+    size TEXT,
+    storageID TEXT,
+    FOREIGN KEY (storageID) REFERENCES Storage(codStorage)
 );
 
 
@@ -42,17 +42,17 @@ CREATE TABLE Orders (
     codOrder INTEGER PRIMARY KEY,
     date DATE,
     shipmentDate DATE,
-    UserID TEXT,
-    FOREIGN KEY (UserID) REFERENCES WebUser(codUser)
+    userID TEXT,
+    FOREIGN KEY (userID) REFERENCES WebUser(codUser)
 );
 
 CREATE TABLE Contains (
-    OrderID INTEGER,
-    ClothesID INTEGER,
+    orderID INTEGER,
+    clothesID INTEGER,
     qnt INTEGER,
-    PRIMARY KEY (OrderID, ClothesID),
-    FOREIGN KEY (OrderID) REFERENCES Orders(codOrder),
-    FOREIGN KEY (ClothesID) REFERENCES Clothes(codClothes)
+    PRIMARY KEY (orderID, clothesID),
+    FOREIGN KEY (orderID) REFERENCES Orders(codOrder),
+    FOREIGN KEY (clothesID) REFERENCES Clothes(codClothes)
 );
 
 

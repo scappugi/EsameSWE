@@ -42,6 +42,9 @@
       <mapping database-type="SQLITE" interface-id="DEFAULT" />
     </recently-used-interfaces>
   </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/SQL/scheme.sql" connection-id="virtual-sqlite-connection" session-id="" current-schema="" />
+  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
       <connection id="8f3aeedc-a9bc-4233-9efb-85e9442201f0" active="true" signed="true">
@@ -497,6 +500,7 @@
       </compiler>
       <debugger>
         <debugger-type value="ASK" />
+        <use-generic-runners value="true" />
       </debugger>
     </operation-settings>
     <ddl-file-settings>
@@ -546,6 +550,5 @@
   </component>
   <component name="DBNavigator.Project.StatementExecutionManager">
     <execution-variables />
-    <execution-variable-types />
   </component>
 </project>
