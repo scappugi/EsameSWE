@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Clothes;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Contains;
 
+
 CREATE TABLE WebUser (
     codUser TEXT PRIMARY KEY,
     UserName TEXT,
