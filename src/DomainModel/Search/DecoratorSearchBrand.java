@@ -24,7 +24,7 @@ public class DecoratorSearchBrand extends BaseDecoratorSearch{
         }
 
         for(Clothes cl : basequery){
-            if(cl.getBrand() == brand)
+            if(cl.getBrand().equals(brand))
                 filtered.add(cl);
         }
         return filtered;

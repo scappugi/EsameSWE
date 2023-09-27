@@ -24,7 +24,7 @@ public class DecoratorSearchSize extends BaseDecoratorSearch {
         }
 
         for(Clothes cl : basequery){
-            if(cl.getSize() == size)
+            if(cl.getSize().equals(size))
                 filtered.add(cl);
         }
         return filtered;
