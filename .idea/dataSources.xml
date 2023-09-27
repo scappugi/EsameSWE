@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ShopOnline@localhost" uuid="6823c71c-9b8d-45f4-95d2-0367cbd282e1">
-      <driver-ref>postgresql</driver-ref>
+    <data-source source="LOCAL" name="ShopOnline" uuid="d7d314c4-e797-4253-a9a7-3e8c1327dd33">
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/ShopOnline</jdbc-url>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../sqlite/ShopOnline.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="ShopOnline" uuid="f342b6bb-c726-4c6b-ba51-d6268252fedb">
