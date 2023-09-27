@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class SearchConcrete implements Search {
     @Override
-    public ArrayList<Clothes> searchClothes() throws ClassNotFoundException {
+    public ArrayList<Clothes> searchClothes() {
         /*Connection connection = null;
         PreparedStatement preparedstatement = null;
         ResultSet resultset = null;
@@ -38,9 +38,7 @@ public class SearchConcrete implements Search {
 
             }
             connection.close(); // close connection
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return results;
