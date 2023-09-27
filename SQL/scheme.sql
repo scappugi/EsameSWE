@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS Contains;
 
 CREATE TABLE WebUser (
     codUser TEXT PRIMARY KEY,
-    UserName TEXT,
+    userName TEXT,
     password TEXT
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE Clothes (
     brand TEXT,
     size TEXT,
     storageID TEXT,
-    FOREIGN KEY (storageID) REFERENCES Storage(codStorage)
+    FOREIGN KEY (StorageID) REFERENCES Storage(codStorage)
 );
 
 
