@@ -35,12 +35,18 @@ public class RegisteredWebUserController {
             privateareaDAO.populatePrivateArea(registeredwebuser.getPrivateArea(),registeredwebuser.getUsername()); //dao prende ordini e li inserisce
     }
 
-    public void addClothesToCart(Clothes clothes, int qty) {
-        registeredwebuser.getCart().getMap().put(clothes,qty);
+    public boolean addClothesToCart(Clothes clothes, int qty) {
+        boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
+        if(!found)
+            registeredwebuser.getCart().getMap().put(clothes,qty);
+        return found;
     }
 
-    public void removeClothesFromCart(Clothes clothes) {
-        registeredwebuser.getCart().getMap().remove(clothes);
+    public boolean removeClothesFromCart(Clothes clothes) {
+        boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
+        if(found)
+            registeredwebuser.getCart().getMap().remove(clothes);
+        return found;
     }
 
 
