@@ -4,7 +4,7 @@ public class RegisteredWebUser extends WebUser{
 
     private PrivateArea privateaerea;
     private Cart cart;
-    public RegisteredWebUser(int code, String username, String password) {
+    public RegisteredWebUser(String username, String password) {
         super(username, password);
         privateaerea = new PrivateArea();
         cart = new Cart();
@@ -21,4 +21,5 @@ public class RegisteredWebUser extends WebUser{
     public Cart getCart(){
         return cart;
     }
+
 }

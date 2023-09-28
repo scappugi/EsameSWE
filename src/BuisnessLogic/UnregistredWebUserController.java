@@ -6,6 +6,8 @@ import DataAccess.PrivateAreaDAO;
 import DomainModel.RegisteredWebUser;
 import DomainModel.WebUser;
 
+import java.sql.SQLException;
+
 public class UnregistredWebUserController {
 
     CartDAO cartDAO;
@@ -16,8 +18,10 @@ public class UnregistredWebUserController {
 
     }
 
-    public RegisteredWebUser registerWebUser(String username, String password ){
-        if(homepageDAO.registerUser(username,password))
-        return
+    public RegisteredWebUser registerWebUser(String username, String password ) throws SQLException {
+        if(homepageDAO.registerUser(username,password)) {
+            return new RegisteredWebUser(username,password);
+        }
+        return null;
     }
 }

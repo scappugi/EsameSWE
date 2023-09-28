@@ -31,8 +31,22 @@ public class HomePageDAO {
         }
     }
 
-    public boolean registerUser(WebUser webUser){
+    public boolean registerUser(String username, String password)throws SQLException{
+        String query = "SELECT * FROM WebUser WHERE username = ? AND password = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+
+        // insert element into db
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        // close delcaration
+        preparedStatement.close();
+
+        // Se è stato inserito almeno un record, la registrazione ha successo
+        if (rowsAffected > 0)
         return true;
+        else return false;
     }
 
     public boolean login(String username, String password){
