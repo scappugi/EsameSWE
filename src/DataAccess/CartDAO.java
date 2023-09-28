@@ -1,11 +1,13 @@
 package DataAccess;
 
+import DomainModel.Cart;
 import DomainModel.Clothes;
 
 public class CartDAO {
     public CartDAO(){} //costruttore vuoto
 
-    public boolean addToCart(Clothes clothes){
+    public boolean addToCart(Clothes clothes, Cart cart){
+
         return true;
     }
 
