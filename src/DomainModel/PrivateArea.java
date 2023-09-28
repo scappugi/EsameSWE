@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PrivateArea {
 
     private ArrayList<Order> orders;
-    private WebUser owner;
+    private RegisteredWebUser owner;
 
     public PrivateArea(){
         orders = new ArrayList<>();
@@ -14,12 +14,5 @@ public class PrivateArea {
     public ArrayList<Order> getOrders(){
         return orders;
     }
-    /*public void addorder(Order neworder){
-        orders.add(neworder);
-    }
-    public void showitems(){
-        for(int i = 0; i < orders.size(); i++){
-            orders.get(i).show();
-        }
-    }*/
+
 }

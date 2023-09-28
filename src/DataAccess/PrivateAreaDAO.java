@@ -3,14 +3,14 @@ package DataAccess;
 import DomainModel.Order;
 import DomainModel.PrivateArea;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PrivateAreaDAO {
 
-    public PrivateAreaDAO(){}
+    public PrivateAreaDAO() {
+    }
 
     private Connection connection;
 
@@ -33,19 +33,36 @@ public class PrivateAreaDAO {
     }
 
     //manca il modifyDaty() non so a cosa serve
-    public ArrayList<Order> getAllOrder(){
+    public ArrayList<Order> getAllOrder() {
         ArrayList<Order> orders = null;
         return orders;
     }
-    public Order getOrder(Order o){
+
+    public Order getOrder(Order o) {
         return o;
     }
 
-    public boolean addOrder(){
+    public boolean addOrder() {
         return true;
     }
 
-    public void popolatePrivateArea(PrivateArea privatearea) {
+    public void populatePrivateArea(PrivateArea privatearea, String username) {
+        String query = "SELECT * FROM Orders,WebUser WHERE userName = ? AND codUser = Orders.userID";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("codOrder");
+                Date ordered = resultSet.getDate("date");
+                Date shipment = resultSet.getDate("shipmentDate");
+
+                Order order = new Order(id, ordered, shipment, username);
+                privatearea.getOrders().add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

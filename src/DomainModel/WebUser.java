@@ -1,9 +1,9 @@
 package DomainModel;
 
 public class WebUser {
-    private boolean logged;
-    private String username;
-    private String password;
+    protected boolean logged;
+    protected String username;
+    protected String password;
 
 
     public WebUser(String u, String p) { //for registered users

@@ -6,29 +6,26 @@ import java.util.Date;
 public class Order {
     private String id;
     private Date ordered; //when the order was placed
-    private Date shipped; //when the order was shipped
+    private Date shipment; //when the order was shipped
     private String shipto;
-    private String status;
     private Cart cart;
 
-    public Order(String id, Date o, String sh, String s) {
+    public Order(String id, Date ordered, Date shipment, String shipto) {
         this.id = id;
-        ordered = o;
-        shipped = null;
-        shipto = sh;
-        status = s;
+        this.ordered = ordered;
+        this.shipment = shipment;
+        this.shipto = shipto;
     }
 
     public void setShipped(Date date){
-        shipped = date;
+        shipment = date;
     }
 
     public void show(){
         System.out.println(("id : " + id));
         System.out.println(("ordered : " + ordered));
-        System.out.println(("shipped : " + shipped));
+        System.out.println(("shipped : " + shipment));
         System.out.println(("ship to : " + shipto));
-        System.out.println(("status : " + status));
     }
 
 }

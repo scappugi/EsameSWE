@@ -14,6 +14,10 @@ public class RegisteredWebUser extends WebUser{
         return privateaerea;
     }
 
+    public String getUsername(){
+        return username;
+    }
+
     public Cart getCart(){
         return cart;
     }
