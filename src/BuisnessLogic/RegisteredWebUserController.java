@@ -20,19 +20,21 @@ public class RegisteredWebUserController {
 
     }
 
-    public void login(String username, String password){
-        if(homepageDAO.login(username, password)){
+    public void login(String username, String password) {
+        if (homepageDAO.login(username, password)) {
             registeredwebuser.setLogged(true);
         }
     }
 
-    public void logout(){
+    public void logout() {
         registeredwebuser.setLogged(false);
     }
 
-    public void accessPrivateArea(){
-        privateareaDAO.popolatePrivateArea(registeredwebuser.getPrivateArea());
+    public void accessPrivateArea() {
+        if (registeredwebuser.getLogged())
+            privateareaDAO.popolatePrivateArea(registeredwebuser.getPrivateArea());
     }
+
     public boolean removeClothesFromCart(Clothes clothes) {
         return cartDAO.removeToCart(clothes);
     }
