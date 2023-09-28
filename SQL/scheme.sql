@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Contains;
 
 
 CREATE TABLE WebUser (
-    codUser TEXT PRIMARY KEY AUTOINCREMENT,
+    codUser integer PRIMARY KEY AUTOINCREMENT,
     userName TEXT,
     password TEXT
 );
