@@ -44,8 +44,11 @@ public class RegisteredWebUserController {
     }
 
 
-    public boolean modifyQuantityClothesFromCart(Clothes clothes, int newquantity) {
-        return cartDAO.modifyQuantityCartItem(clothes, newquantity);
+    public boolean modifyQuantityClothesFromCart(Clothes clothes, int newqty) {
+        boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
+        if(found)
+            registeredwebuser.getCart().getMap().put(clothes,newqty);
+        return found;
     }
 
     public boolean buyCart() {
