@@ -1,4 +1,4 @@
 package BuisnessLogic;
 
-public class Observer {
+public interface Observer {
 }

@@ -1,4 +1,4 @@
 package BuisnessLogic;
 
-public class Subject {
+public interface Subject {
 }
