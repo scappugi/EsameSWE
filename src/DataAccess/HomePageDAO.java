@@ -21,6 +21,16 @@ public class HomePageDAO {
         }
     }
 
+    public void closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean registerUser(WebUser webUser){
         return true;
     }
