@@ -1,21 +1,18 @@
 package DomainModel;
 
 public class WebUser {
-    private int coduser;
     private boolean logged;
     private String username;
     private String password;
 
 
-    public WebUser(int c, String u, String p) { //for registered users
-        coduser = c;
+    public WebUser(String u, String p) { //for registered users
         logged = false;
         username = u;
         password = p;
     }
 
-    public WebUser(int c) { //for unregistered users
-        coduser = c;
+    public WebUser() { //for unregistered users
         logged = false;
         username = null;
         password = null;
@@ -29,8 +26,5 @@ public class WebUser {
         logged = l;
     }
 
-    public int getCod() {
-        return coduser;
-    }
 
 }

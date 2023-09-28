@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class HomePageDAO {
 
-    public boolean registerUser(WebUser webUser){
+    public boolean registerUser(String username, String password){
+
         return true;
     }
 

@@ -32,7 +32,7 @@ public class RegisteredWebUserController {
 
     public void accessPrivateArea() {
         if (registeredwebuser.getLogged())
-            privateareaDAO.popolatePrivateArea(registeredwebuser.getPrivateArea());
+            privateareaDAO.popolatePrivateArea(registeredwebuser.getPrivateArea()); //dao prende ordini e li inserisce
     }
 
     public boolean removeClothesFromCart(Clothes clothes) {
