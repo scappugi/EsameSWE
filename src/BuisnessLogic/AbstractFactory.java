@@ -1,4 +1,4 @@
 package BuisnessLogic;
 
-public class AbstractFactory {
+public interface AbstractFactory {
 }
