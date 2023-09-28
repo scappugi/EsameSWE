@@ -1,6 +1,7 @@
 package DataAccess;
 
 import DomainModel.Order;
+import DomainModel.PrivateArea;
 
 import java.util.ArrayList;
 
@@ -21,4 +22,6 @@ public class PrivateAreaDAO {
         return true;
     }
 
+    public void popolatePrivateArea(PrivateArea privateArea) {
+    }
 }

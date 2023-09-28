@@ -14,6 +14,8 @@ public class HomePageDAO {
         return true;
     }
 
+    public boolean login(String username, String password){return true;}
+
     public boolean registerCreditCard(/**/){
         return true;
     }
