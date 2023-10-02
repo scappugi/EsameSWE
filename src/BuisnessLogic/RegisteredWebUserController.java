@@ -32,19 +32,24 @@ public class RegisteredWebUserController {
 
     public void accessPrivateArea() {
         if (registeredwebuser.getLogged())
-            privateareaDAO.populatePrivateArea(registeredwebuser.getPrivateArea(),registeredwebuser.getUsername()); //dao prende ordini e li inserisce
+            privateareaDAO.populatePrivateArea(registeredwebuser.getPrivateArea(), registeredwebuser.getUsername()); //dao prende ordini e li inserisce
     }
 
     public boolean addClothesToCart(Clothes clothes, int qty) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
-        if(!found)
-            registeredwebuser.getCart().getMap().put(clothes,qty);
-        return found;
+        boolean available = false;
+        if (!found)
+            if (homepageDAO.checkAvailability(clothes) - qty >= 0){
+                registeredwebuser.getCart().getMap().put(clothes, qty);
+                homepageDAO.updateAvailability(clothes, qty);
+                available = true;
+            }
+        return available;
     }
 
     public boolean removeClothesFromCart(Clothes clothes) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
-        if(found)
+        if (found)
             registeredwebuser.getCart().getMap().remove(clothes);
         return found;
     }
@@ -52,15 +57,15 @@ public class RegisteredWebUserController {
 
     public boolean modifyQuantityClothesFromCart(Clothes clothes, int newqty) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
-        if(found)
-            registeredwebuser.getCart().getMap().put(clothes,newqty);
+        if (found)
+            registeredwebuser.getCart().getMap().put(clothes, newqty);
         return found;
     }
 
     public boolean buyCart() {
         boolean payed = false;
-        if(!registeredwebuser.getCart().getMap().isEmpty()){
-            if(cartDAO.payCartItem(registeredwebuser.getCart())){
+        if (!registeredwebuser.getCart().getMap().isEmpty()) {
+            if (cartDAO.payCartItem(registeredwebuser.getCart())) {
                 payed = true;
                 registeredwebuser.getCart().getMap().clear();
             }
