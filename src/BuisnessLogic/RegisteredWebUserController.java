@@ -58,7 +58,10 @@ public class RegisteredWebUserController {
     }
 
     public boolean buyCart() {
-        return cartDAO.payCartItem();
+        if(!registeredwebuser.getCart().getMap().isEmpty()){
+            return cartDAO.payCartItem(registeredwebuser.getCart());
+        }
+        return false;
     }
 
 }

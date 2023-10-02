@@ -22,7 +22,7 @@ public class CartDAO {
         return true;
     }
 
-    public boolean payCartItem(){
+    public boolean payCartItem(Cart cart){
         return true;
     }
 
