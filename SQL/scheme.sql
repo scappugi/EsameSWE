@@ -35,6 +35,7 @@ CREATE TABLE Clothes (
     brand TEXT,
     size TEXT,
     storageID TEXT,
+    qty integer,
     FOREIGN KEY (StorageID) REFERENCES Storage(codStorage)
 );
 

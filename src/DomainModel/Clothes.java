@@ -1,18 +1,21 @@
 package DomainModel;
 
 public class Clothes {
+
+    private int codclothes;
     private float price;
     private String brand;
     private String size;
     private String color;
     private String category;
 
-    public Clothes(float p, String b, String s, String co, String ca) {
+    public Clothes(float p, String b, String s, String co, String ca, int cc) {
         price = p;
         brand = b;
         size = s;
         color = co;
         category = ca;
+        codclothes = cc;
     }
 
     public float getPrice() {
@@ -34,4 +37,8 @@ public class Clothes {
     public String getCategory() {
         return category;
     }
+    public int getCodclothes() {
+        return codclothes;
+    }
+
 }
