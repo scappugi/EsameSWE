@@ -4,26 +4,16 @@ import DomainModel.Cart;
 import DomainModel.Clothes;
 
 public class CartDAO {
-    public CartDAO(){} //costruttore vuoto
 
-    public boolean addToCart(Clothes clothes, Cart cart){
-
-        return true;
-    }
-
-    public boolean removeToCart(Clothes clothes){
-        return true;
-    }
-
-    public boolean modifyQuantityCartItem(Clothes clothes, int newquantity){
-        return true;
-    }
-    public boolean viewAllCartItem(Clothes clothes){
-        return true;
+    private HomePageDAO homepageDAO;
+    public CartDAO(HomePageDAO homepageDAO){
+        this.homepageDAO = homepageDAO;
     }
 
     public boolean payCartItem(Cart cart){
-        return true;
+        boolean flag = false;
+
+        return flag;
     }
 
 

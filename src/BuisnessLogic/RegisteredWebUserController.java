@@ -37,11 +37,12 @@ public class RegisteredWebUserController {
 
     public boolean addClothesToCart(Clothes clothes, int qty) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
+        int qtyclothes = homepageDAO.checkAvailability(clothes);
         boolean available = false;
         if (!found)
-            if (homepageDAO.checkAvailability(clothes) - qty >= 0){
+            if (qtyclothes - qty >= 0) {
                 registeredwebuser.getCart().getMap().put(clothes, qty);
-                homepageDAO.updateAvailability(clothes, qty);
+                homepageDAO.updateAvailability(clothes, qtyclothes - qty);
                 available = true;
             }
         return available;
@@ -49,16 +50,34 @@ public class RegisteredWebUserController {
 
     public boolean removeClothesFromCart(Clothes clothes) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
-        if (found)
+        int qtyclothes = homepageDAO.checkAvailability(clothes);
+        if (found) {
+            int newqty = (int) registeredwebuser.getCart().getMap().get(clothes);
             registeredwebuser.getCart().getMap().remove(clothes);
+            homepageDAO.updateAvailability(clothes, qtyclothes + newqty);
+        }
         return found;
     }
 
 
     public boolean modifyQuantityClothesFromCart(Clothes clothes, int newqty) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
-        if (found)
-            registeredwebuser.getCart().getMap().put(clothes, newqty);
+        int qty = (int) registeredwebuser.getCart().getMap().get(clothes);
+        int qtyclothes = homepageDAO.checkAvailability(clothes);
+        int difference = 0;
+        if (!found) {
+            if (newqty < qty) {
+                difference = qty - newqty;
+                homepageDAO.updateAvailability(clothes, qtyclothes + difference);
+                registeredwebuser.getCart().getMap().put(clothes, newqty);
+            } else { //newqty > qty
+                difference = newqty - qty;
+                if (homepageDAO.checkAvailability(clothes) - difference >= 0) {
+                    registeredwebuser.getCart().getMap().put(clothes, newqty);
+                    homepageDAO.updateAvailability(clothes, qtyclothes - difference);
+                }
+            }
+        }
         return found;
     }
 
