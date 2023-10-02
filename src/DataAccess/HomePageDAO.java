@@ -94,7 +94,6 @@ public class HomePageDAO {
 
     //search if the qnt is not 0
     public int checkAvailability(Clothes clothes){
-
         int qty=0;
 
         String selectQuery = "SELECT * FROM Clothes WHERE codClothes = ?";
@@ -108,6 +107,17 @@ public class HomePageDAO {
             e.printStackTrace();
         }
         return qty;
+    }
+
+    public void updateAvailability(Clothes clothes, int newqty) {
+            String query = "UPDATE Clothes SET qty = ? WHERE codClothes = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, newqty);
+            preparedStatement.setInt(2, clothes.getCodclothes());
+            ResultSet resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean checkDescription(Clothes clothes){
@@ -128,8 +138,6 @@ public class HomePageDAO {
         ArrayList<Shirt> shirts = null;
         return shirts;
     }
-
-
 
 
 
