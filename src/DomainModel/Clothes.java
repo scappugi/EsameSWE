@@ -17,6 +17,13 @@ public class Clothes {
         category = ca;
         codclothes = cc;
     }
+    public Clothes(float p, String b, String s, String co, String ca) {
+        price = p;
+        brand = b;
+        size = s;
+        color = co;
+        category = ca;
+    }
 
     public float getPrice() {
         return price;

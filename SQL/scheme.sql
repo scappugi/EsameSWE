@@ -23,13 +23,13 @@ CREATE TABLE DebitCard (
 );
 
 CREATE TABLE Factory (
-    codStorage TEXT,
+    codStorage integer PRIMARY KEY AUTOINCREMENT,
     qnt INTEGER,
-    PRIMARY KEY (codStorage)
+    name TEXT
 );
 
 CREATE TABLE Clothes (
-    codClothes INTEGER PRIMARY KEY,
+    codClothes INTEGER PRIMARY KEY AUTOINCREMENT ,
     color TEXT,
     category TEXT,
     brand TEXT,

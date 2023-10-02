@@ -1,14 +1,20 @@
 package BuisnessLogic;
 
+import DataAccess.SuperUserDAO;
 import DomainModel.Clothes;
 import DomainModel.SuperUser;
 
 public class SuperUserController {
-    public SuperUserController (SuperUser superUser){
+
+    SuperUser superuser;
+    SuperUserDAO superUserDAO;
+    public SuperUserController (SuperUser su, SuperUserDAO suD){
+        superuser = su;
+        superUserDAO=suD;
 
     }
     public boolean catalogaNuoviVestiti(Clothes clothes){
-
+        superUserDAO.addNewClothes(clothes);
         return true;
     }
 
