@@ -10,10 +10,8 @@ public class CartDAO {
         this.homepageDAO = homepageDAO;
     }
 
-    public boolean payCartItem(Cart cart){
-        boolean flag = false;
-
-        return flag;
+    public void payCartItem(Cart cart){
+        //crea ordine
     }
 
 

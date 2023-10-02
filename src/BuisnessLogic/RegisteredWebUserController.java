@@ -84,11 +84,10 @@ public class RegisteredWebUserController {
     public boolean buyCart() {
         boolean payed = false;
         if (!registeredwebuser.getCart().getMap().isEmpty()) {
-            if (cartDAO.payCartItem(registeredwebuser.getCart())) {
+                cartDAO.payCartItem(registeredwebuser.getCart());
                 payed = true;
                 registeredwebuser.getCart().getMap().clear();
             }
-        }
         return payed;
     }
 
