@@ -10,7 +10,6 @@ public class Cart {
     public Cart(){
         collection = new HashMap<>();
     }
-
     public Map getMap(){
         return  collection;
     }

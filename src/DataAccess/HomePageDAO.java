@@ -92,8 +92,31 @@ public class HomePageDAO {
         return false;
     }
 
-    public boolean checkAvailability(Clothes clothes){
-        return true;
+    //search if the qnt is not 0
+    public int checkAvailability(Clothes clothes){
+        int count=0;
+        String selectQuery = "SELECT * FROM Clothes WHERE category = ? AND color = ? AND brand = ? AND size = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setString(1, clothes.getCategory());
+            preparedStatement.setString(2, clothes.getColor());
+            preparedStatement.setString(3, clothes.getBrand());
+            preparedStatement.setString(4, clothes.getSize());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Leggi i dati del vestito dal ResultSet
+                int codClothes = resultSet.getInt("codClothes");
+                String color = resultSet.getString("color");
+                String brand = resultSet.getString("brand");
+                String taglia = resultSet.getString("taglia");
+                String storageID = resultSet.getString("StorageID");
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public boolean checkDescription(Clothes clothes){
