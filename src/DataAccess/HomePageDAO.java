@@ -94,7 +94,9 @@ public class HomePageDAO {
 
     //search if the qnt is not 0
     public int checkAvailability(Clothes clothes){
+
         int qty=0;
+
         String selectQuery = "SELECT * FROM Clothes WHERE codClothes = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
             preparedStatement.setInt(1, clothes.getCodclothes());
