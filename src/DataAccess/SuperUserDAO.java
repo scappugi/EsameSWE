@@ -9,6 +9,7 @@ public class SuperUserDAO {
     } //method with codstorage not null
 
     public boolean addNewClothes(Clothes clothes){
+
         return true;
     }
 

@@ -13,7 +13,7 @@ public class SuperUserController {
         superUserDAO=suD;
 
     }
-    public boolean catalogaNuoviVestiti(Clothes clothes){
+    public boolean catalogaNuoviVestiti(Clothes clothes, AbstractFactory factory){
         superUserDAO.addNewClothes(clothes);
         return true;
     }
