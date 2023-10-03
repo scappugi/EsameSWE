@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    private String id;
+    private int id;
     private Date ordered; //when the order was placed
     private Date shipment; //when the order was shipped
     private String shipto;
     private Map<Clothes, Integer> items = new HashMap<>();
 
-    public Order(String id, Date ordered, Date shipment, String shipto, Map<Clothes, Integer> itesm) {
+    public Order(int id, Date ordered, Date shipment, String shipto, Map<Clothes, Integer> itesm) {
         this.id = id;
         this.ordered = ordered;
         this.shipment = shipment;

@@ -18,7 +18,7 @@ CREATE TABLE DebitCard (
     CVV TEXT,
     date DATE,
     userID TEXT,
-    PRIMARY KEY (codCard, CVV)
+    PRIMARY KEY (codCard, CVV),
     FOREIGN KEY (userID) REFERENCES WebUser(codUser)
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE Clothes (
     size TEXT,
     storageID TEXT,
     qty integer,
-    price integer,
+    price float,
     FOREIGN KEY (StorageID) REFERENCES Storage(codStorage)
 );
 

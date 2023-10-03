@@ -1,11 +1,14 @@
 package DataAccess;
 
+import DomainModel.Clothes;
 import DomainModel.Order;
 import DomainModel.PrivateArea;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PrivateAreaDAO {
 
@@ -32,21 +35,53 @@ public class PrivateAreaDAO {
         }
     }
 
-    //manca il modifyDaty() non so a cosa serve
-    public ArrayList<Order> getAllOrder() {
-        ArrayList<Order> orders = null;
-        return orders;
+    private Map<Clothes, Integer> getOrderDetails(int orderId) {
+        Map<Clothes, Integer> orderDetails = new HashMap<>();
+
+        String query = "SELECT clothesID, qnt FROM Contains WHERE orderID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+            ResultSet containsResultSet = preparedStatement.executeQuery();
+            while (containsResultSet.next()) {
+                int clothesId = containsResultSet.getInt("clothesID");
+                int quantity = containsResultSet.getInt("qnt");
+                Clothes clothes = getClothes(clothesId);
+
+                if (clothes != null) {
+                    orderDetails.put(clothes, quantity);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderDetails;
     }
 
-    public Order getOrder(Order o) {
-        return o;
+    private Clothes getClothes(int clothesId) {
+        Clothes clothes = null;
+        String query = "SELECT * FROM Clothes WHERE codClothes = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, clothesId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                float price = resultSet.getFloat("price");
+                String brand = resultSet.getString("brand");
+                String size = resultSet.getString("size");
+                String color = resultSet.getString("color");
+                String category = resultSet.getString("category");
+
+                clothes = new Clothes(price, brand, size, color, category);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return clothes;
     }
 
-    public boolean addOrder() {
-        return true;
-    }
 
     public void populatePrivateArea(PrivateArea privatearea, String username) {
+        Map<Clothes, Integer> mymap = new HashMap<>();
+
         String query = "SELECT * FROM Orders,WebUser WHERE userName = ? AND codUser = Orders.userID";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -54,11 +89,12 @@ public class PrivateAreaDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String id = resultSet.getString("codOrder");
+                int id = resultSet.getInt("codOrder");
                 Date ordered = resultSet.getDate("date");
                 Date shipment = resultSet.getDate("shipmentDate");
+                mymap = getOrderDetails(id);
 
-                Order order = new Order(id, ordered, shipment, username);
+                Order order = new Order(id, ordered, shipment, username, mymap);
                 privatearea.getOrders().add(order);
             }
         } catch (SQLException e) {
