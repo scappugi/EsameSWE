@@ -12,9 +12,6 @@ import java.util.Map;
 
 public class PrivateAreaDAO {
 
-    public PrivateAreaDAO() {
-    }
-
     private Connection connection;
 
     public PrivateAreaDAO(String databaseURL) {

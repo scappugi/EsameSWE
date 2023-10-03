@@ -69,6 +69,7 @@ public class HomePageDAO {
         return false;
     }
 
+
     public boolean registerCreditCard(DebitCard debitcard, String username) throws SQLException {
         int codUser = 0;
         String selectQuery = "SELECT * FROM WebUser WHERE userName = ?"; //ricerca user
@@ -93,6 +94,44 @@ public class HomePageDAO {
         }
         return false;
     }
+
+    public boolean removeCreditCard(int cardNumber, int CVV, String username) {
+        try {
+            int userId = getUserIdByUsername(username);
+
+            if (userId != -1) {
+                String deleteQuery = "DELETE FROM DebitCard WHERE codCard = ? AND CVV = ? AND UserID = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, cardNumber);
+                preparedStatement.setInt(2, CVV);
+                preparedStatement.setInt(3, userId);
+
+                int rowsDeleted = preparedStatement.executeUpdate();
+                connection.commit();
+
+                return rowsDeleted > 0; // Ritorna true se almeno una riga è stata eliminata
+            }
+        } catch (SQLException e) {
+            // Gestire l'eccezione SQL qui (loggare, lanciare o gestire in altro modo)
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private int getUserIdByUsername(String username) throws SQLException {
+        String selectQuery = "SELECT codUser FROM WebUser WHERE userName = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getInt("codUser");
+        }
+
+        return -1;
+    }
+
 
     //search if the qnt is not 0
     public int checkAvailability(Clothes clothes) {
