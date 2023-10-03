@@ -23,7 +23,7 @@ public class ConcreteFactoryBrand3 implements AbstractFactory{
     }
 
     @Override
-    public Sweatshirt createSweatShirt(String size, String color) {
+    public Sweatshirt createSweatShirt(String size, String color  ) {
         Random random = new Random();
         float randomNumber = 5 + random.nextFloat() * (20 - 5);
         return  new Sweatshirt(randomNumber,"brand3" ,size, color);
