@@ -87,6 +87,7 @@ public class HomePageDAO {
             preparedStatement1.setInt(4, codUser);
 
             int rowsInserted = preparedStatement1.executeUpdate();
+            connection.commit();
 
             return rowsInserted > 0; //se aggiungo almeno una riga ritorno true
         }
@@ -116,6 +117,7 @@ public class HomePageDAO {
             preparedStatement.setInt(1, newqty);
             preparedStatement.setInt(2, clothes.getCodclothes());
             ResultSet resultSet = preparedStatement.executeQuery();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

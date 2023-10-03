@@ -2,19 +2,22 @@ package DomainModel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
     private String id;
     private Date ordered; //when the order was placed
     private Date shipment; //when the order was shipped
     private String shipto;
-    private Cart cart;
+    private Map<Clothes, Integer> items = new HashMap<>();
 
-    public Order(String id, Date ordered, Date shipment, String shipto) {
+    public Order(String id, Date ordered, Date shipment, String shipto, Map<Clothes, Integer> itesm) {
         this.id = id;
         this.ordered = ordered;
         this.shipment = shipment;
         this.shipto = shipto;
+        this.items = items;
     }
 
     public void setShipped(Date date){
