@@ -7,6 +7,12 @@ public class DebitCard {
     private int CVV;
     private Date date;
 
+    public DebitCard(int codCard, int CVV, Date date){
+        this.codCard = codCard;
+        this.CVV = CVV;
+        this.date = date;
+    }
+
     public int getCodCard() {
         return codCard;
     }

@@ -112,11 +112,42 @@ public class HomePageDAO {
                 return rowsDeleted > 0; // Ritorna true se almeno una riga è stata eliminata
             }
         } catch (SQLException e) {
-            // Gestire l'eccezione SQL qui (loggare, lanciare o gestire in altro modo)
             e.printStackTrace();
         }
 
         return false;
+    }
+
+    public void  showCreditCard(String username){//method that shows all of a user's credit cards
+
+    }
+
+    public ArrayList<DebitCard> getAllDebitCards(String username) {
+        ArrayList<DebitCard> debitCards = new ArrayList<>();
+
+        try {
+            // found the id by the username
+            int userId = getUserIdByUsername(username);
+
+            if (userId != -1) {
+                String selectQuery = "SELECT * FROM DebitCard WHERE UserID = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    int cardNumber = resultSet.getInt("codCard");
+                    int cvv = resultSet.getInt("CVV");
+                    Date cardDate = resultSet.getDate("date");
+
+                    DebitCard debitCard = new DebitCard(cardNumber, cvv, cardDate);
+                    debitCards.add(debitCard);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return debitCards;
     }
 
     private int getUserIdByUsername(String username) throws SQLException {
