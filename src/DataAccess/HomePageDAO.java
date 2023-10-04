@@ -36,8 +36,9 @@ public class HomePageDAO {
 
             // insert element into db
             int rowsAffected = preparedStatement.executeUpdate();
+            connection.commit();
 
-            // close delcaration
+            // close declaration
             preparedStatement.close();
 
             // Se è stato inserito almeno un record, la registrazione ha successo
