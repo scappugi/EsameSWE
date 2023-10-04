@@ -42,7 +42,7 @@ public class RegisteredWebUserController {
         if (!found)
             if (qtyclothes - qty >= 0) {
                 registeredwebuser.getCart().getMap().put(clothes, qty);
-                homepageDAO.updateAvailability(clothes, qtyclothes - qty);
+                homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes - qty);
                 available = true;
             }
         return available;
@@ -54,7 +54,7 @@ public class RegisteredWebUserController {
         if (found) {
             int newqty = (int) registeredwebuser.getCart().getMap().get(clothes);
             registeredwebuser.getCart().getMap().remove(clothes);
-            homepageDAO.updateAvailability(clothes, qtyclothes + newqty);
+            homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes + newqty);
         }
         return found;
     }
@@ -68,13 +68,13 @@ public class RegisteredWebUserController {
         if (!found) {
             if (newqty < qty) {
                 difference = qty - newqty;
-                homepageDAO.updateAvailability(clothes, qtyclothes + difference);
+                homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes + difference);
                 registeredwebuser.getCart().getMap().put(clothes, newqty);
             } else { //newqty > qty
                 difference = newqty - qty;
                 if (homepageDAO.checkAvailability(clothes) - difference >= 0) {
                     registeredwebuser.getCart().getMap().put(clothes, newqty);
-                    homepageDAO.updateAvailability(clothes, qtyclothes - difference);
+                    homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes - difference);
                 }
             }
         }
