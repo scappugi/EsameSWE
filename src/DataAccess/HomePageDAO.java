@@ -118,9 +118,6 @@ public class HomePageDAO {
         return false;
     }
 
-    public void  showCreditCard(String username){//method that shows all of a user's credit cards
-
-    }
 
     public ArrayList<DebitCard> getAllDebitCards(String username) {
         ArrayList<DebitCard> debitCards = new ArrayList<>();
@@ -191,25 +188,6 @@ public class HomePageDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean checkDescription(Clothes clothes) {
-        return true;
-    }
-
-    public ArrayList<Trousers> getTrousers(/*bisogna mettere la roba su cui filtrare(dal DB)*/) {
-        ArrayList<Trousers> trousers1 = null;
-        return trousers1; //dovrà ritornare qualcosa di sensato
-    }
-
-    public ArrayList<Sweatshirt> getSweatshirt() {
-        ArrayList<Sweatshirt> sweatshirts = null;
-        return sweatshirts;
-    }
-
-    public ArrayList<Shirt> getShirt() {
-        ArrayList<Shirt> shirts = null;
-        return shirts;
     }
 
 

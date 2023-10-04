@@ -44,7 +44,6 @@ public class SuperUserController {
             }
         }
 
-
         return false;
     }
 
