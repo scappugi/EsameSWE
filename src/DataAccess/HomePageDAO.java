@@ -36,7 +36,6 @@ public class HomePageDAO {
 
             // insert element into db
             int rowsAffected = preparedStatement.executeUpdate();
-            connection.commit();
 
             // close declaration
             preparedStatement.close();
@@ -89,7 +88,6 @@ public class HomePageDAO {
             preparedStatement1.setInt(4, codUser);
 
             int rowsInserted = preparedStatement1.executeUpdate();
-            connection.commit();
 
             return rowsInserted > 0; //se aggiungo almeno una riga ritorno true
         }
@@ -108,7 +106,6 @@ public class HomePageDAO {
                 preparedStatement.setInt(3, userId);
 
                 int rowsDeleted = preparedStatement.executeUpdate();
-                connection.commit();
 
                 return rowsDeleted > 0; // Ritorna true se almeno una riga è stata eliminata
             }
@@ -185,7 +182,6 @@ public class HomePageDAO {
             preparedStatement.setInt(1, newqty);
             preparedStatement.setInt(2, codclothes);
             ResultSet resultSet = preparedStatement.executeQuery();
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

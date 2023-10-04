@@ -78,7 +78,6 @@ public class CartDAO {
                 containStatement.addBatch();
             }
             containStatement.executeUpdate();
-            connection.commit();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
