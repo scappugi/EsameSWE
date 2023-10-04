@@ -179,11 +179,11 @@ public class HomePageDAO {
         return qty;
     }
 
-    public void updateAvailability(Clothes clothes, int newqty) {
+    public void updateAvailability(int codclothes, int newqty) {
         String query = "UPDATE Clothes SET qty = ? WHERE codClothes = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, newqty);
-            preparedStatement.setInt(2, clothes.getCodclothes());
+            preparedStatement.setInt(2, codclothes);
             ResultSet resultSet = preparedStatement.executeQuery();
             connection.commit();
         } catch (SQLException e) {
