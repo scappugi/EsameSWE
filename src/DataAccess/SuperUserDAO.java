@@ -15,7 +15,7 @@ public class SuperUserDAO {
         }
     }
     public boolean addNewClothes(Clothes clothes,String namefactory,int qnt){
-        String selectQuery = "SELECT factoryCode FROM FactoryTable WHERE name = ?";
+        String selectQuery = "SELECT codStorage FROM Factory WHERE name = ?";
         int factoryCode=0;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
