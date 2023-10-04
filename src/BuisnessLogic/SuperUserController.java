@@ -14,10 +14,10 @@ public class SuperUserController {
     public SuperUserController(SuperUser su, SuperUserDAO suD) {
         superuser = su;
         superUserDAO = suD;
-        AbstractFactory factory1 = new ConcreteFactoryBrand1();
+        AbstractFactory factory1 = new ConcreteFactoryBrand1("f1");
         // dao.aggiugi fabbrica
-        AbstractFactory factory2 = new ConcreteFactoryBrand2();
-        AbstractFactory factory3 = new ConcreteFactoryBrand3();
+        AbstractFactory factory2 = new ConcreteFactoryBrand2("f2");
+        AbstractFactory factory3 = new ConcreteFactoryBrand3("f3");
         superuser.getFactories().add(factory1);
         superuser.getFactories().add(factory2);
         superuser.getFactories().add(factory3);
@@ -30,15 +30,15 @@ public class SuperUserController {
             if (superuser.getFactories() == factory) { //check if the factory is right
                 if (category.equals("shirt")) { //look what category is clothes
                     clothes = it.createShirt(size, color);
-                    superUserDAO.addNewClothes(clothes, qnt); //pass the qnt to db
+                    superUserDAO.addNewClothes(clothes,it.getName(), qnt); //pass the qnt to db
                     return true;
                 } else if (category.equals("sweatshirt")) {
                     clothes = it.createSweatShirt(size, color);
-                    superUserDAO.addNewClothes(clothes, qnt);
+                    superUserDAO.addNewClothes(clothes, it.getName(), qnt);
                     return true;
                 } else if (category.equals("trousers")) {
-                    clothes = it.createTrousers(size, color);
-                    superUserDAO.addNewClothes(clothes, qnt);
+                    clothes = it.createTrousers(size,color);
+                    superUserDAO.addNewClothes(clothes, it.getName(), qnt);
                     return true;
                 }
             }

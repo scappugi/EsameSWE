@@ -7,6 +7,16 @@ import DomainModel.Trousers;
 import java.util.Random;
 
 public class ConcreteFactoryBrand3 implements AbstractFactory{
+    private String name;
+    public String getName() {
+        return name;
+    }
+
+
+
+    public ConcreteFactoryBrand3(String n){
+        this.name = n;
+    }
 
     @Override
     public Trousers createTrousers(String size, String color) {
