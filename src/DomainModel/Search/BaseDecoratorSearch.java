@@ -11,5 +11,5 @@ public abstract class BaseDecoratorSearch implements Search{
         search = s;
     }
 
-    public abstract ArrayList<Clothes> searchClothes(String databaseURL);
+    public abstract ArrayList<Clothes> searchClothes();
 }

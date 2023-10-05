@@ -13,10 +13,10 @@ public class DecoratorSearchPrice extends BaseDecoratorSearch {
     }
 
     @Override
-    public ArrayList<Clothes> searchClothes(String databaseURL) {
+    public ArrayList<Clothes> searchClothes() {
         ArrayList<Clothes> basequery = null;
         try {
-            basequery = search.searchClothes(databaseURL);
+            basequery = search.searchClothes();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

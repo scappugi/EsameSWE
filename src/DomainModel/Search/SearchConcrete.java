@@ -7,16 +7,22 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class SearchConcrete implements Search {
+    protected Connection connection;
+    public SearchConcrete(String databaseURL){
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
-    public ArrayList<Clothes> searchClothes(String databaseURL) {
+    public ArrayList<Clothes> searchClothes() {
 
 
         ArrayList<Clothes> results = new ArrayList<>();
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);//connection to db
-
+           // Class.forName("com.mysql.cj.jdbc.Driver");
             Statement statement = connection.createStatement(); //to execute query
             String query = "SELECT * FROM Clothes";
             ResultSet resultSet = statement.executeQuery(query);
@@ -42,7 +48,7 @@ public class SearchConcrete implements Search {
 
             }
             connection.close(); // close connection
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return results;
