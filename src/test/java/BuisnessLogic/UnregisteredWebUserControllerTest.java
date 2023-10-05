@@ -1,5 +1,7 @@
 package BuisnessLogic;
 
+import DataAccess.HomePageDAO;
+import DomainModel.UnregisteredWebUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +48,18 @@ class UnregisteredWebUserControllerTest {
 
     @Test
     void registerWebUser() {
+        UnregisteredWebUser user = new UnregisteredWebUser();
+        HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
+        try {
+            controller.registerWebUser("user1", "password1");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            controller.registerWebUser("user1","password1");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
