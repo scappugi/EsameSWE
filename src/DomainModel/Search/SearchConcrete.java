@@ -8,20 +8,14 @@ import java.util.ArrayList;
 
 public class SearchConcrete implements Search {
     @Override
-    public ArrayList<Clothes> searchClothes() {
-        /*Connection connection = null;
-        PreparedStatement preparedstatement = null;
-        ResultSet resultset = null;
-        return null;*/
-        String jdbcUrl = "jdbc:mysql://localhost:5432/ShopOnline";
-        String username = "postgres";
-        String password = "fiorentina";
+    public ArrayList<Clothes> searchClothes(String databaseURL) {
+
 
         ArrayList<Clothes> results = new ArrayList<>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(jdbcUrl, username, password); //connection to db
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);//connection to db
 
             Statement statement = connection.createStatement(); //to execute query
             String query = "SELECT * FROM Clothes";

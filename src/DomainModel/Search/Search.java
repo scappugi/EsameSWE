@@ -5,5 +5,5 @@ import DomainModel.Clothes;
 import java.util.ArrayList;
 
 public interface Search {
-    ArrayList<Clothes> searchClothes() throws ClassNotFoundException;
+    ArrayList<Clothes> searchClothes(String databaseURL) throws ClassNotFoundException;
 }
