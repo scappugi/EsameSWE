@@ -3,8 +3,8 @@ package DomainModel;
 public class UnregisteredWebUser extends WebUser {
     private Cart cart;
 
-    public UnregisteredWebUser(int code) {
-        super(code);
+    public UnregisteredWebUser() {
+        super();
         cart = new Cart();
     }
 

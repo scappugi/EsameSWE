@@ -1,8 +1,6 @@
 package DataAccess;
 
-import DomainModel.Clothes;
-import DomainModel.Order;
-import DomainModel.PrivateArea;
+import DomainModel.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -67,7 +65,12 @@ public class PrivateAreaDAO {
                 String color = resultSet.getString("color");
                 String category = resultSet.getString("category");
 
-                clothes = new Clothes(price, brand, size, color, category);
+                if(category.equals("shirt"))
+                    clothes = new Shirt(price, brand, size, color);
+                if(category.equals("sweatshirt"))
+                    clothes = new Sweatshirt(price, brand, size, color);
+                if(category.equals("trousers"))
+                    clothes = new Trousers(price, brand, size, color);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
