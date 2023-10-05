@@ -59,7 +59,9 @@ class UnregisteredWebUserControllerTest {
             throw new RuntimeException(e);
         }
         try {
-            controller.registerWebUser("user1","password1");
+            RegisteredWebUser registered = controller.registerWebUser("user1", "password1");
+            if (registered == null)
+                System.out.println("User already registered");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
