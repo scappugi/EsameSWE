@@ -85,7 +85,7 @@ public class SuperUserDAO {
         }
     }
 
-    public boolean updateQtyClothes(int codclothes, int newqnt){ //pass thw key because the super uces can access to db and read the information
+    public boolean updateQtyClothes(int codclothes, int newqnt){ //pass thw key because the superuser can access to db and read the information
         String updateQuery = "UPDATE Clothes SET qty = ? WHERE codClothes = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
