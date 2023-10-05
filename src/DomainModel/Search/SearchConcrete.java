@@ -1,6 +1,7 @@
 package DomainModel.Search;
 
 import DomainModel.Clothes;
+import DomainModel.Shirt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,8 +34,17 @@ public class SearchConcrete implements Search {
                 String color = resultSet.getString("color");
                 String category = resultSet.getString("category");
 
-                Clothes cl = new Clothes(price, brand,size, color, category);
-                results.add(cl);
+
+                if (category.equals("shirt")) { //look what category is clothes
+                    Clothes cl = new Shirt(price, brand, size, color);
+                    results.add(cl);
+                } else if (category.equals("trousers")) {
+                    Clothes cl = new Shirt(price, brand, size, color);
+                    results.add(cl);
+                } else if (category.equals("sweatshirt")) {
+                    Clothes cl = new Shirt(price, brand, size, color);
+                    results.add(cl);
+                }
 
             }
             connection.close(); // close connection
