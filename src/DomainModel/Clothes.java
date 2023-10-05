@@ -1,6 +1,6 @@
 package DomainModel;
 
-public class Clothes {
+public abstract class Clothes {
 
     private int codclothes;
     private float price;
