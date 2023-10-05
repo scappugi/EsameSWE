@@ -28,7 +28,7 @@ public class HomePageDAO {
     }
 
     public boolean registerUser(String username, String password) throws SQLException {
-        if (getUserIdByUsername(username) != -1) {
+        if (getUserIdByUsername(username) == -1) {
             String query = "INSERT INTO WebUser (UserName, Password) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
