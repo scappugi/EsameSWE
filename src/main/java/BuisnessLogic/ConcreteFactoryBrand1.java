@@ -36,4 +36,5 @@ public class ConcreteFactoryBrand1 implements AbstractFactory {
         float randomNumber = 20 + random.nextFloat() * (50 - 20);
         return  new Sweatshirt(randomNumber, "brand1", size, color);
     }
+
 }

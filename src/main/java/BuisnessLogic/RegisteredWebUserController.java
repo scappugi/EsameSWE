@@ -5,18 +5,26 @@ import DataAccess.HomePageDAO;
 import DataAccess.PrivateAreaDAO;
 import DomainModel.Clothes;
 import DomainModel.RegisteredWebUser;
+import DomainModel.Search.DecoratorSearchBrand;
+import DomainModel.Search.DecoratorSearchPrice;
+import DomainModel.Search.DecoratorSearchSize;
+import DomainModel.Search.SearchConcrete;
+
+import java.util.ArrayList;
 
 public class RegisteredWebUserController {
-    CartDAO cartDAO;
-    HomePageDAO homepageDAO;
-    PrivateAreaDAO privateareaDAO;
-    RegisteredWebUser registeredwebuser;
+    private CartDAO cartDAO;
+    private HomePageDAO homepageDAO;
+    private PrivateAreaDAO privateareaDAO;
+    private RegisteredWebUser registeredwebuser;
+    private SearchConcrete search;
 
     public RegisteredWebUserController(CartDAO cartDAO, HomePageDAO homePageDAO, PrivateAreaDAO privateAreaDAO, RegisteredWebUser registeredwebuser) {
         this.cartDAO = cartDAO;
         this.homepageDAO = homePageDAO;
         this.privateareaDAO = privateAreaDAO;
         this.registeredwebuser = registeredwebuser;
+        this.search = new SearchConcrete("C:/sqlite/ShopOnline.db");
 
     }
 
@@ -81,4 +89,19 @@ public class RegisteredWebUserController {
         return payed;
     }
 
+
+    public ArrayList<Clothes> searchByPrice(int price){
+       DecoratorSearchPrice decoratorprice = new DecoratorSearchPrice(this.search, price);
+        return decoratorprice.searchClothes();
+    }
+
+    public ArrayList<Clothes> searchBySize(String size){
+        DecoratorSearchSize decoratorsize = new DecoratorSearchSize(this.search, size);
+        return decoratorsize.searchClothes();
+    }
+
+    public ArrayList<Clothes> searchByBrand(String brand){
+        DecoratorSearchBrand decoratorbrand = new DecoratorSearchBrand(this.search, brand);
+        return decoratorbrand.searchClothes();
+    }
 }

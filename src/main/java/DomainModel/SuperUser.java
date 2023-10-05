@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public class SuperUser extends WebUser {
 
     private static SuperUser istance = null;
+    private ArrayList<AbstractFactory> factories = new ArrayList<>();
+
 
     public ArrayList<AbstractFactory> getFactories() {
         return factories;
     }
-
-    private ArrayList<AbstractFactory> factories = new ArrayList<>();
 
     private SuperUser(String username, String password) {
         super(username, password);
@@ -23,7 +23,7 @@ public class SuperUser extends WebUser {
 
     }
 
-    public static SuperUser getIstance(int code, String username, String password) {
+    public static SuperUser getInstance(int code, String username, String password) {
         if (istance == null)
             istance = new SuperUser(username, password);
         return istance;

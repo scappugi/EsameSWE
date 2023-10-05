@@ -24,7 +24,6 @@ CREATE TABLE DebitCard (
 
 CREATE TABLE Factory (
     codStorage integer PRIMARY KEY AUTOINCREMENT,
-    qnt INTEGER,
     name TEXT
 );
 
