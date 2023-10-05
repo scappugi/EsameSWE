@@ -28,7 +28,7 @@ public class HomePageDAO {
     }
 
     public boolean registerUser(String username, String password) throws SQLException {
-        if (!login(username, password)) {
+        if (getUserIdByUsername(username) != -1) {
             String query = "INSERT INTO WebUser (UserName, Password) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
@@ -49,7 +49,7 @@ public class HomePageDAO {
         return false; // the user is already registred
     }
 
-    public boolean login(String username, String password) {
+    public RegisteredWebUser login(String username, String password) {
         String query = "SELECT * FROM WebUser WHERE username = ? AND password = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -60,15 +60,17 @@ public class HomePageDAO {
 
             // If there is a line in the result, it means the credentials are correct
             if (resultSet.next()) {
-                return true;
+                return new RegisteredWebUser(username,password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         // If there is no match, return false
-        return false;
+        return null;
     }
-
+    public void logout(RegisteredWebUser registeredwebuser) {
+        registeredwebuser.setLogged(false);
+    }
 
     public boolean registerCreditCard(DebitCard debitcard, String username) throws SQLException {
         int codUser = 0;

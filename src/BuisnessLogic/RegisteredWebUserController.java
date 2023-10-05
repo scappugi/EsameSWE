@@ -20,16 +20,6 @@ public class RegisteredWebUserController {
 
     }
 
-    public void login(String username, String password) {
-        if (homepageDAO.login(username, password)) {
-            registeredwebuser.setLogged(true);
-        }
-    }
-
-    public void logout() {
-        registeredwebuser.setLogged(false);
-    }
-
     public void accessPrivateArea() {
         if (registeredwebuser.getLogged())
             privateareaDAO.populatePrivateArea(registeredwebuser.getPrivateArea(), registeredwebuser.getUsername()); //dao prende ordini e li inserisce
