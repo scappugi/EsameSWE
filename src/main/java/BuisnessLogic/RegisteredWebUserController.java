@@ -104,4 +104,6 @@ public class RegisteredWebUserController {
         DecoratorSearchBrand decoratorbrand = new DecoratorSearchBrand(this.search, brand);
         return decoratorbrand.searchClothes();
     }
+
+    //mancano i metodi per aggiungere e rimuovere le carte di credito + metodo per login e logout
 }

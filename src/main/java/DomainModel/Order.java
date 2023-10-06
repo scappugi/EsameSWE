@@ -12,7 +12,7 @@ public class Order {
     private String shipto;
     private Map<Clothes, Integer> items = new HashMap<>();
 
-    public Order(int id, Date ordered, Date shipment, String shipto, Map<Clothes, Integer> itesm) {
+    public Order(int id, Date ordered, Date shipment, String shipto, Map<Clothes, Integer> items) {
         this.id = id;
         this.ordered = ordered;
         this.shipment = shipment;

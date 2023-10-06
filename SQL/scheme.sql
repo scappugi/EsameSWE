@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Contains;
 
 
 CREATE TABLE WebUser (
-    codUser integer PRIMARY KEY AUTOINCREMENT,
+    codUser INTEGER PRIMARY KEY AUTOINCREMENT,
     userName TEXT,
     password TEXT
 );
@@ -44,7 +44,7 @@ CREATE TABLE Orders (
     codOrder INTEGER PRIMARY KEY,
     date DATE,
     shipmentDate DATE,
-    userID TEXT,
+    userID INTEGER,
     FOREIGN KEY (userID) REFERENCES WebUser(codUser)
 );
 

@@ -80,12 +80,13 @@ public class PrivateAreaDAO {
 
 
     public void populatePrivateArea(PrivateArea privatearea, String username) {
-        Map<Clothes, Integer> mymap = new HashMap<>();
+        Map<Clothes, Integer> mymap;
 
         String query = "SELECT * FROM Orders,WebUser WHERE userName = ? AND codUser = Orders.userID";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
+            System.out.println(getUserIdByUsername(username));
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -102,5 +103,16 @@ public class PrivateAreaDAO {
         }
     }
 
+    private int getUserIdByUsername(String username) throws SQLException {
+        String selectQuery = "SELECT codUser FROM WebUser WHERE userName = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
+        if (resultSet.next()) {
+            return resultSet.getInt("codUser");
+        }
+
+        return -1;
+    }
 }
