@@ -189,5 +189,9 @@ public class HomePageDAO {
         }
     }
 
+    public Connection getConnection(){
+        return connection;
+    }
+
 
 }
