@@ -21,13 +21,16 @@ public class RegisteredWebUserController {
     private RegisteredWebUser registeredwebuser;
     private SearchConcrete search;
 
-    public RegisteredWebUserController(CartDAO cartDAO, HomePageDAO homePageDAO, PrivateAreaDAO privateAreaDAO, RegisteredWebUser registeredwebuser) {
+    public RegisteredWebUserController(CartDAO cartDAO, HomePageDAO homePageDAO, PrivateAreaDAO privateAreaDAO) {
         this.cartDAO = cartDAO;
         this.homepageDAO = homePageDAO;
         this.privateareaDAO = privateAreaDAO;
-        this.registeredwebuser = registeredwebuser;
         this.search = new SearchConcrete("C:/sqlite/ShopOnline.db");
 
+    }
+
+    public void setRegisteredwebuser(RegisteredWebUser user) {
+        this.registeredwebuser = user;
     }
 
     public void accessPrivateArea() {
@@ -109,7 +112,8 @@ public class RegisteredWebUserController {
 
     public RegisteredWebUser login(String username, String password) {
         RegisteredWebUser user = homepageDAO.login(username, password);
-        user.setLogged(true);
+        if (user != null)
+            user.setLogged(true);
         return user;
     }
 

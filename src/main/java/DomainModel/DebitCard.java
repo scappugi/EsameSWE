@@ -36,4 +36,10 @@ public class DebitCard {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public void show(){
+        System.out.println(("code : " + codCard));
+        System.out.println(("CVV : " + CVV));
+        System.out.println(("date : " + date));
+    }
 }

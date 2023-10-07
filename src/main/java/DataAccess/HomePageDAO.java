@@ -60,7 +60,7 @@ public class HomePageDAO {
 
             // If there is a line in the result, it means the credentials are correct
             if (resultSet.next()) {
-                return new RegisteredWebUser(username,password);
+                return new RegisteredWebUser(username, password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,30 +68,34 @@ public class HomePageDAO {
         // If there is no match, return false
         return null;
     }
-    public void logout(RegisteredWebUser registeredwebuser) {
+   /* public void logout(RegisteredWebUser registeredwebuser) {
         registeredwebuser.setLogged(false);
-    }
+    }*/
 
-    public boolean registerCreditCard(DebitCard debitcard, String username) throws SQLException {
+    public boolean registerCreditCard(DebitCard debitcard, String username) {
         int codUser = 0;
         String selectQuery = "SELECT * FROM WebUser WHERE userName = ?"; //ricerca user
-        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setString(1, username);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(selectQuery);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            // Leggi i dati dell'utente dal ResultSet e crea un oggetto WebUser
-            codUser = resultSet.getInt("codUser"); //una volta trovato l' user inserisce la carta
-            String insertQuery = "INSERT INTO DebitCard (codCard, CVV, Date, UserID) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement1 = connection.prepareStatement(insertQuery);
-            preparedStatement1.setInt(1, debitcard.getCodCard());
-            preparedStatement1.setInt(2, debitcard.getCVV());
-            preparedStatement1.setDate(3, (Date) debitcard.getDate());
-            preparedStatement1.setInt(4, codUser);
+            if (resultSet.next()) {
+                // Leggi i dati dell'utente dal ResultSet e crea un oggetto WebUser
+                codUser = resultSet.getInt("codUser"); //una volta trovato l' user inserisce la carta
+                String insertQuery = "INSERT INTO DebitCard (codCard, CVV, Date, UserID) VALUES (?, ?, ?, ?)";
+                PreparedStatement preparedStatement1 = connection.prepareStatement(insertQuery);
+                preparedStatement1.setInt(1, debitcard.getCodCard());
+                preparedStatement1.setInt(2, debitcard.getCVV());
+                preparedStatement1.setDate(3, (Date) debitcard.getDate());
+                preparedStatement1.setInt(4, codUser);
 
-            int rowsInserted = preparedStatement1.executeUpdate();
-
-            return rowsInserted > 0; //se aggiungo almeno una riga ritorno true
+                int rowsInserted = preparedStatement1.executeUpdate();
+                return rowsInserted > 0; //se aggiungo almeno una riga ritorno true
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return false;
     }
@@ -109,7 +113,7 @@ public class HomePageDAO {
 
                 int rowsDeleted = preparedStatement.executeUpdate();
 
-                return rowsDeleted > 0; // Ritorna true se almeno una riga è stata eliminata
+                return rowsDeleted > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -183,15 +187,14 @@ public class HomePageDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, newqty);
             preparedStatement.setInt(2, codclothes);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return connection;
     }
-
 
 }

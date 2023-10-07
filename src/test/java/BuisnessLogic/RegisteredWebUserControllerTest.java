@@ -3,8 +3,10 @@ package BuisnessLogic;
 import DataAccess.CartDAO;
 import DataAccess.HomePageDAO;
 import DataAccess.PrivateAreaDAO;
+import DomainModel.Clothes;
 import DomainModel.Order;
 import DomainModel.RegisteredWebUser;
+import DomainModel.Shirt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -92,6 +94,48 @@ class RegisteredWebUserControllerTest {
 
     @Test
     void addClothesToCart() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        CartDAO cartdao = new CartDAO("C:/sqlite/ShopOnline.db", homepagedao);
+        PrivateAreaDAO privateareadao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
+        RegisteredWebUserController controller = new RegisteredWebUserController(cartdao,homepagedao, privateareadao);
+
+
+        //create user
+        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
+        Connection connection = homepagedao.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "user1");
+            preparedStatement.setString(2, "password");
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        RegisteredWebUser user = controller.login("user1", "password");
+        controller.setRegisteredwebuser(user);
+
+        //create clothes
+        String query1 = "INSERT INTO Clothes(COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query1);
+            preparedStatement.setString(1, "red");
+            preparedStatement.setString(2, "shirt");
+            preparedStatement.setString(3, "brand1");
+            preparedStatement.setString(4, "m");
+            preparedStatement.setInt(5, 1);
+            preparedStatement.setInt(6, 10);
+            preparedStatement.setFloat(7, 20);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Shirt clothes = new Shirt(20,"brand1", "m", "red", 10);
+        if(controller.addClothesToCart(clothes, 2))
+            System.out.println("add new clothes");
+        else System.out.println("not enough quantity");
     }
 
     @Test
