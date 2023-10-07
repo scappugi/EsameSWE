@@ -16,25 +16,25 @@ public class ConcreteFactoryBrand1 implements AbstractFactory {
             this.name = n;
     }
     @Override
-    public Trousers createTrousers(String size, String color) {
+    public Trousers createTrousers(String size, String color, int code) {
         //generate a casual price from 20 to 100
         Random random = new Random();
         float randomNumber = 20 + random.nextFloat() * (100 - 20);
-        return new Trousers(randomNumber, "brand1", size , color );
+        return new Trousers(randomNumber, "brand1", size , color, code);
     }
 
     @Override
-    public Shirt createShirt(String size, String color) {
+    public Shirt createShirt(String size, String color, int code) {
         Random random = new Random();
         float randomNumber = 10 + random.nextFloat() * (30 - 10);
-        return new Shirt(randomNumber,"brand1", size, color);
+        return new Shirt(randomNumber,"brand1", size, color, code);
     }
 
     @Override
-    public Sweatshirt createSweatShirt(String size, String color) {
+    public Sweatshirt createSweatShirt(String size, String color, int code) {
         Random random = new Random();
         float randomNumber = 20 + random.nextFloat() * (50 - 20);
-        return  new Sweatshirt(randomNumber, "brand1", size, color);
+        return  new Sweatshirt(randomNumber, "brand1", size, color, code);
     }
 
 }

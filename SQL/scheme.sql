@@ -28,7 +28,7 @@ CREATE TABLE Factory (
 );
 
 CREATE TABLE Clothes (
-    codClothes INTEGER PRIMARY KEY AUTOINCREMENT ,
+    codClothes INTEGER PRIMARY KEY ,
     color TEXT,
     category TEXT,
     brand TEXT,

@@ -17,13 +17,13 @@ public abstract class Clothes {
         this.category = category;
         this.codclothes = codclothes;
     }
-    public Clothes(float p, String b, String s, String co, String ca) {
+   /* public Clothes(float p, String b, String s, String co, String ca) {
         price = p;
         brand = b;
         size = s;
         color = co;
         category = ca;
-    }
+    }*/
 
     public float getPrice() {
         return price;

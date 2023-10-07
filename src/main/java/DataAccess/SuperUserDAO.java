@@ -20,6 +20,8 @@ public class SuperUserDAO {
     public boolean addNewClothes(Clothes clothes, String namefactory, int qnt) {
         String selectQuery = "SELECT codStorage FROM Factory WHERE name = ?";
         int factoryCode = -1;
+        int clothescode = -1;
+        String selectQuery1 = "SELECT codClothes FROM Clothes WHERE codClothes = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
             preparedStatement.setString(1, namefactory);
@@ -31,16 +33,28 @@ public class SuperUserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (factoryCode != -1) {
-            String insertQuery = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery1)) {
+            preparedStatement.setInt(1, clothes.getCodclothes());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                clothescode = resultSet.getInt("codClothes");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (factoryCode != -1 && clothescode == -1) {
+            String insertQuery = "INSERT INTO Clothes (codClothes, color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, clothes.getColor());
-                preparedStatement.setString(2, clothes.getCategory());
-                preparedStatement.setString(3, clothes.getBrand());
-                preparedStatement.setString(4, clothes.getSize());
-                preparedStatement.setInt(5, factoryCode); //this method set NULL storage id
-                preparedStatement.setInt(6, qnt);
-                preparedStatement.setFloat(7, clothes.getPrice());
+                preparedStatement.setInt(1, clothes.getCodclothes());
+                preparedStatement.setString(2, clothes.getColor());
+                preparedStatement.setString(3, clothes.getCategory());
+                preparedStatement.setString(4, clothes.getBrand());
+                preparedStatement.setString(5, clothes.getSize());
+                preparedStatement.setInt(6, factoryCode); //this method set NULL storage id
+                preparedStatement.setInt(7, qnt);
+                preparedStatement.setFloat(8, clothes.getPrice());
 
                 int rowsInserted = preparedStatement.executeUpdate();
 

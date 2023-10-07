@@ -82,13 +82,13 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
             System.out.println("new clothes created");
-        else System.out.println("factory not present");
+        else System.out.println("error");
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f5"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f5", 3))
             System.out.println("new clothes created");
-        else System.out.println("factory not present");
+        else System.out.println("error");
     }
 
     @Test
@@ -97,10 +97,10 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
             System.out.println("new clothes created");
-        else System.out.println("factory not present");
-        if (controller.modifyExistingClothes(6, 10))
+        else System.out.println("error");
+        if (controller.modifyExistingClothes(1, 10))
             System.out.println("qty updated");
         else System.out.println("clothes not found");
         if (controller.modifyExistingClothes(5, 10))
@@ -114,10 +114,10 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
             System.out.println("new clothes created");
         else System.out.println("factory not present");
-        if (controller.deleteExistingClothes(7))
+        if (controller.deleteExistingClothes(1))
             System.out.println("clothes removed");
         else System.out.println("clothes not found");
         if (controller.modifyExistingClothes(5, 10))

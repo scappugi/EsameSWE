@@ -5,8 +5,8 @@ import DomainModel.Sweatshirt;
 import DomainModel.Trousers;
 
 public interface AbstractFactory {
-    public Trousers createTrousers(String size, String color);
-    public Shirt createShirt(String size, String color);
-    public Sweatshirt createSweatShirt(String size, String color);
+    public Trousers createTrousers(String size, String color, int code);
+    public Shirt createShirt(String size, String color, int code);
+    public Sweatshirt createSweatShirt(String size, String color, int code);
     public String getName();
 }

@@ -40,20 +40,20 @@ public class SuperUserController {
         else return false;
     }
 
-   public boolean addNewClothes(String category, String size, String color, int qnt, String factory) {
+   public boolean addNewClothes(String category, String size, String color, int qnt, String factory, int code) {
         for (AbstractFactory it : superuser.getFactories()) {
             Clothes clothes;
             if (it.getName().equals(factory)) { //check if the factory is right
                 if (category.equals("shirt")) { //look what category is clothes
-                    clothes = it.createShirt(size, color);
+                    clothes = it.createShirt(size, color, code);
                     superUserDAO.addNewClothes(clothes, it.getName(), qnt); //pass the qnt to db
                     return true;
                 } else if (category.equals("sweatshirt")) {
-                    clothes = it.createSweatShirt(size, color);
+                    clothes = it.createSweatShirt(size, color, code);
                     superUserDAO.addNewClothes(clothes, it.getName(), qnt);
                     return true;
                 } else if (category.equals("trousers")) {
-                    clothes = it.createTrousers(size, color);
+                    clothes = it.createTrousers(size, color, code);
                     superUserDAO.addNewClothes(clothes, it.getName(), qnt);
                     return true;
                 }

@@ -66,11 +66,11 @@ public class PrivateAreaDAO {
                 String category = resultSet.getString("category");
 
                 if(category.equals("shirt"))
-                    clothes = new Shirt(price, brand, size, color);
+                    clothes = new Shirt(price, brand, size, color, clothesId);
                 if(category.equals("sweatshirt"))
-                    clothes = new Sweatshirt(price, brand, size, color);
+                    clothes = new Sweatshirt(price, brand, size, color, clothesId);
                 if(category.equals("trousers"))
-                    clothes = new Trousers(price, brand, size, color);
+                    clothes = new Trousers(price, brand, size, color,clothesId);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

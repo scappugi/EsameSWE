@@ -33,16 +33,17 @@ public class SearchConcrete implements Search {
                 String size = resultSet.getString("size");
                 String color = resultSet.getString("color");
                 String category = resultSet.getString("category");
+                int code = resultSet.getInt("codClothes");
 
 
                 if (category.equals("shirt")) { //look what category is clothes
-                    Clothes cl = new Shirt(price, brand, size, color);
+                    Clothes cl = new Shirt(price, brand, size, color, code);
                     results.add(cl);
                 } else if (category.equals("trousers")) {
-                    Clothes cl = new Shirt(price, brand, size, color);
+                    Clothes cl = new Shirt(price, brand, size, color, code);
                     results.add(cl);
                 } else if (category.equals("sweatshirt")) {
-                    Clothes cl = new Shirt(price, brand, size, color);
+                    Clothes cl = new Shirt(price, brand, size, color, code);
                     results.add(cl);
                 }
 
