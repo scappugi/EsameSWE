@@ -82,20 +82,46 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if(controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
             System.out.println("new clothes created");
         else System.out.println("factory not present");
 
-        if(controller.addNewClothes("shirt", "m", "red", 20, "f5"))
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f5"))
             System.out.println("new clothes created");
         else System.out.println("factory not present");
     }
 
     @Test
     void modifyExistingClothes() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUser superuser = SuperUser.getInstance(1, "super", "password");
+        SuperUserController controller = new SuperUserController(superuser, superdao);
+
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+            System.out.println("new clothes created");
+        else System.out.println("factory not present");
+        if (controller.modifyExistingClothes(6, 10))
+            System.out.println("qty updated");
+        else System.out.println("clothes not found");
+        if (controller.modifyExistingClothes(5, 10))
+            System.out.println("qty updated");
+        else System.out.println("clothes not found");
     }
 
     @Test
     void deleteExistingClothes() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUser superuser = SuperUser.getInstance(1, "super", "password");
+        SuperUserController controller = new SuperUserController(superuser, superdao);
+
+        if (controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+            System.out.println("new clothes created");
+        else System.out.println("factory not present");
+        if (controller.deleteExistingClothes(7))
+            System.out.println("clothes removed");
+        else System.out.println("clothes not found");
+        if (controller.modifyExistingClothes(5, 10))
+            System.out.println("qty updated");
+        else System.out.println("clothes not found");
     }
 }
