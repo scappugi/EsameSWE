@@ -3,15 +3,13 @@ package BuisnessLogic;
 import DataAccess.CartDAO;
 import DataAccess.HomePageDAO;
 import DataAccess.PrivateAreaDAO;
-import DomainModel.Clothes;
-import DomainModel.Order;
-import DomainModel.RegisteredWebUser;
-import DomainModel.Shirt;
+import DomainModel.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static java.time.LocalDate.*;
 
@@ -346,6 +344,38 @@ class RegisteredWebUserControllerTest {
         if(controller.removeDebitCard(1, 111))
             System.out.println("card removed");
         else System.out.println("card not found");
+    }
+
+    @Test
+    void getAllcards(){
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        CartDAO cartdao = new CartDAO("C:/sqlite/ShopOnline.db", homepagedao);
+        PrivateAreaDAO privateareadao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
+        RegisteredWebUserController controller = new RegisteredWebUserController(cartdao,homepagedao, privateareadao);
+
+
+        //create user
+        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
+        Connection connection = homepagedao.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "user1");
+            preparedStatement.setString(2, "password");
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        RegisteredWebUser user = controller.login("user1", "password");
+        controller.setRegisteredwebuser(user);
+
+        if(controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())))
+            System.out.println("card added");
+        else System.out.println("card already present");
+
+        ArrayList<DebitCard> result = controller.getAllCard();
+        for(DebitCard it : result)
+            it.show();
     }
 
 }
