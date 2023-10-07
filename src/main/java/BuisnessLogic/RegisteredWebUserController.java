@@ -68,7 +68,7 @@ public class RegisteredWebUserController {
         int qty = (int) registeredwebuser.getCart().getMap().get(clothes);
         int qtyclothes = homepageDAO.checkAvailability(clothes);
         int difference = 0;
-        if (!found) {
+        if (found) {
             if (newqty < qty) {
                 difference = qty - newqty;
                 homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes + difference);
