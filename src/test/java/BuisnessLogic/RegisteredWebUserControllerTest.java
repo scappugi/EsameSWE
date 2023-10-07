@@ -53,8 +53,8 @@ class RegisteredWebUserControllerTest {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
         CartDAO cartdao = new CartDAO("C:/sqlite/ShopOnline.db", homepagedao);
         PrivateAreaDAO privateareadao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
-        RegisteredWebUser user = new RegisteredWebUser("user1", "password");
-        RegisteredWebUserController controller = new RegisteredWebUserController(cartdao,homepagedao, privateareadao, user);
+        RegisteredWebUserController controller = new RegisteredWebUserController(cartdao,homepagedao, privateareadao);
+
 
         //create user
         String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
@@ -68,6 +68,8 @@ class RegisteredWebUserControllerTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        RegisteredWebUser user = controller.login("user1", "password");
+        controller.setRegisteredwebuser(user);
         //create order
         String query1 = "INSERT INTO Orders(codOrder, date, shipmentDate, userID) VALUES (?, ?, ?, ?)";
         try {
@@ -75,14 +77,13 @@ class RegisteredWebUserControllerTest {
             preparedStatement.setInt(1, 1);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            preparedStatement.setInt(4, 8);
+            preparedStatement.setInt(4, 5);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        user.setLogged(true);
         controller.accessPrivateArea();
         for(Order it : user.getPrivateArea().getOrders()){
             it.show();
