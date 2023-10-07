@@ -289,14 +289,30 @@ class RegisteredWebUserControllerTest {
     }
 
     @Test
-    void searchByPrice() {
-    }
+    void addDebitCard(){
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        CartDAO cartdao = new CartDAO("C:/sqlite/ShopOnline.db", homepagedao);
+        PrivateAreaDAO privateareadao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
+        RegisteredWebUserController controller = new RegisteredWebUserController(cartdao,homepagedao, privateareadao);
 
-    @Test
-    void searchBySize() {
-    }
 
-    @Test
-    void searchByBrand() {
+        //create user
+        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
+        Connection connection = homepagedao.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "user1");
+            preparedStatement.setString(2, "password");
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        RegisteredWebUser user = controller.login("user1", "password");
+        controller.setRegisteredwebuser(user);
+
+        if(controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())))
+            System.out.println("card added");
+        else System.out.println("card already present");
     }
 }
