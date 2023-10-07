@@ -66,11 +66,11 @@ class SuperUserControllerTest {
         SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
-        //try to insert a factory that is already in the db
+        //try to remove a factory that is  in the db
         if (controller.removeFactory("f1"))
             System.out.println("factory removed");
         else System.out.println("factory not found");
-        //insert a factory that isn't in the db
+        //remove a factory that isn't in the db
         if (controller.removeFactory("f4"))
             System.out.println("factory removed");
         else System.out.println("factory not found");
@@ -78,6 +78,17 @@ class SuperUserControllerTest {
 
     @Test
     void addNewClothes() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUser superuser = SuperUser.getInstance(1, "super", "password");
+        SuperUserController controller = new SuperUserController(superuser, superdao);
+
+        if(controller.addNewClothes("shirt", "m", "red", 20, "f1"))
+            System.out.println("new clothes created");
+        else System.out.println("factory not present");
+
+        if(controller.addNewClothes("shirt", "m", "red", 20, "f5"))
+            System.out.println("new clothes created");
+        else System.out.println("factory not present");
     }
 
     @Test
