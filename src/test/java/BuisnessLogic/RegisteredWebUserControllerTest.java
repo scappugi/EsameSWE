@@ -114,23 +114,24 @@ class RegisteredWebUserControllerTest {
         controller.setRegisteredwebuser(user);
 
         //create clothes
-        String query1 = "INSERT INTO Clothes(COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        Shirt clothes = new Shirt(20,"brand1", "m", "red", 10);
+        Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
         if(controller.addClothesToCart(clothes, 2))
             System.out.println("add new clothes");
         else System.out.println("not enough quantity");
@@ -160,23 +161,24 @@ class RegisteredWebUserControllerTest {
         controller.setRegisteredwebuser(user);
 
         //create clothes
-        String query1 = "INSERT INTO Clothes(COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        Shirt clothes = new Shirt(20,"brand1", "m", "red", 11);
+        Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
         if(controller.addClothesToCart(clothes, 2))
             System.out.println("add new clothes");
         else System.out.println("not enough quantity");
@@ -210,16 +212,17 @@ class RegisteredWebUserControllerTest {
         controller.setRegisteredwebuser(user);
 
         //create clothes
-        String query1 = "INSERT INTO Clothes(COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -260,16 +263,17 @@ class RegisteredWebUserControllerTest {
         controller.setRegisteredwebuser(user);
 
         //create clothes
-        String query1 = "INSERT INTO Clothes(COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
