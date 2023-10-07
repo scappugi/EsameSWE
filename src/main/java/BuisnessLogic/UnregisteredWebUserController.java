@@ -17,7 +17,7 @@ public class UnregisteredWebUserController {
     private HomePageDAO homepageDAO;
     private SearchConcrete search;
 
-    public UnregisteredWebUserController(HomePageDAO homepageDA) {
+    public UnregisteredWebUserController(HomePageDAO homepageDAO) {
         this.homepageDAO = homepageDAO;
         this.search = new SearchConcrete("C:/sqlite/ShopOnline.db");
 
