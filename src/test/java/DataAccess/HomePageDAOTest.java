@@ -1,13 +1,12 @@
 package DataAccess;
 
+import DomainModel.DebitCard;
 import DomainModel.RegisteredWebUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,10 +91,37 @@ class HomePageDAOTest {
 
     @Test
     void registerCreditCard() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        boolean flag = false;
+        try {
+            homepagedao.registerUser("user1", "password");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
+        flag = homepagedao.registerCreditCard(card, "user1");
+        if (flag)
+            System.out.println("new card registered");
+        else System.out.println("card already present");
     }
 
     @Test
     void removeCreditCard() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        boolean flag = false;
+        try {
+            homepagedao.registerUser("user1", "password");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
+        homepagedao.registerCreditCard(card, "user1");
+        flag = homepagedao.removeCreditCard(1, 111, "user1");
+        if (flag)
+            System.out.println("card removed");
+        else System.out.println("card not found");
     }
 
     @Test
