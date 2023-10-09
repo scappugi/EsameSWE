@@ -1,7 +1,9 @@
 package DataAccess;
 
+import DomainModel.Clothes;
 import DomainModel.DebitCard;
 import DomainModel.RegisteredWebUser;
+import DomainModel.Shirt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -148,9 +150,55 @@ class HomePageDAOTest {
 
     @Test
     void checkAvailability() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        Connection connection = homepagedao.getConnection();
+
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query1);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Clothes clothes1 = new Shirt(20, "brand1", "m", "red", 1);
+        System.out.println("qty : " + homepagedao.checkAvailability(clothes1));
+
     }
 
     @Test
     void updateAvailability() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        Connection connection = homepagedao.getConnection();
+
+        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, STORAGEID, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query1);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "red");
+            preparedStatement.setString(3, "shirt");
+            preparedStatement.setString(4, "brand1");
+            preparedStatement.setString(5, "m");
+            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(7, 10);
+            preparedStatement.setFloat(8, 20);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Clothes clothes1 = new Shirt(20, "brand1", "m", "red", 1);
+        System.out.println("qty : " + homepagedao.checkAvailability(clothes1));
+        homepagedao.updateAvailability(1, 2);
     }
 }
