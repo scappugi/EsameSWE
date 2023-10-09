@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -126,6 +127,23 @@ class HomePageDAOTest {
 
     @Test
     void getAllDebitCards() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        boolean flag = false;
+        try {
+            homepagedao.registerUser("user1", "password");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
+        flag = homepagedao.registerCreditCard(card, "user1");
+        if (flag)
+            System.out.println("new card registered");
+        else System.out.println("card already present");
+
+        ArrayList<DebitCard> result = homepagedao.getAllDebitCards("user1");
+        for(DebitCard it : result)
+            it.show();
     }
 
     @Test
