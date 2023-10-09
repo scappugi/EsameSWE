@@ -1,5 +1,6 @@
 package DataAccess;
 
+import DomainModel.RegisteredWebUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +54,7 @@ class HomePageDAOTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(flag)
+        if (flag)
             System.out.println("new user registered");
         else System.out.println("user already present");
 
@@ -63,13 +64,30 @@ class HomePageDAOTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(flag)
+        if (flag)
             System.out.println("new user registered");
         else System.out.println("user already present");
     }
 
     @Test
     void login() {
+        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        boolean flag = false;
+        RegisteredWebUser user = null;
+        try {
+            flag = homepagedao.registerUser("user1", "password");
+            user = homepagedao.login("user1", "password");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (flag)
+            System.out.println("new user registered");
+        else System.out.println("user already present");
+
+
+        if (user != null)
+            System.out.println("user logged");
+        else System.out.println("user not found");
     }
 
     @Test
