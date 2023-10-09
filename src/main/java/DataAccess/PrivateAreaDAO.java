@@ -115,4 +115,8 @@ public class PrivateAreaDAO {
 
         return -1;
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }
