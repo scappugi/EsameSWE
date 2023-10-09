@@ -2,7 +2,7 @@ package DomainModel;
 
 import java.util.ArrayList;
 
-public class WebUser {
+public abstract class WebUser {
     protected boolean logged;
     protected String username;
     protected String password;
