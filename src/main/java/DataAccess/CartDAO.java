@@ -75,9 +75,9 @@ public class CartDAO {
                 containStatement.setInt(1,orderid);
                 containStatement.setInt(2,clothes.getCodclothes());
                 containStatement.setInt(3,qty);
-                containStatement.addBatch();
+                containStatement.executeUpdate();
             }
-            containStatement.executeUpdate();
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
