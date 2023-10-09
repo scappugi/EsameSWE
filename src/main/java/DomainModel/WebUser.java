@@ -7,7 +7,7 @@ public abstract class WebUser {
     protected String username;
     protected String password;
 
-    private ArrayList<DebitCard> debitcards;
+    protected ArrayList<DebitCard> debitcards;
 
 
     public WebUser(String u, String p) { //for registered users
@@ -30,20 +30,10 @@ public abstract class WebUser {
         logged = l;
     }
 
-    public void newCard(DebitCard newcard) {
-        debitcards.add(newcard);
+    public ArrayList<DebitCard> getDebitcards() {
+        return debitcards;
     }
 
-    public DebitCard getCard(DebitCard ocard) {
-
-        for (DebitCard cards : debitcards) {
-            if (cards.getCodCard() == ocard.getCodCard()) {
-                //find card
-                return cards;
-            }
-        }
-        return null; //failed
-    }
 }
 
 
