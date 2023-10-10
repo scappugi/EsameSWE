@@ -159,6 +159,9 @@ public class SuperUserDAO {
         return false;
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 }
 
 
