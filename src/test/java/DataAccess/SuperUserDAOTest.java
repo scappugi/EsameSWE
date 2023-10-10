@@ -109,10 +109,45 @@ class SuperUserDAOTest {
 
     @Test
     void updateQtyClothes() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
+        Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
+
+        String query = "INSERT INTO Factory (name) VALUES (?)";
+        Connection connection = superdao.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "f1");
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(superdao.addNewClothes(clothes, "f1", 10))
+            System.out.println("add new clothes");
+        else System.out.println("error");
+        if(superdao.addNewClothes(clothes2, "f1", 20))
+            System.out.println("add new clothes");
+        else System.out.println("error");
+
+        if(superdao.updateQtyClothes(1, 55))
+            System.out.println("qty updated");
+        else System.out.println("error");
+        if(superdao.updateQtyClothes(5, 55))
+            System.out.println("qty updated");
+        else System.out.println("error");
     }
 
     @Test
     void addFactory() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        if(superdao.addFactory("f1"))
+            System.out.println("factory added");
+        else System.out.println("error");
+        if(superdao.addFactory("f1"))
+            System.out.println("factory added");
+        else System.out.println("error");
     }
 
     @Test
