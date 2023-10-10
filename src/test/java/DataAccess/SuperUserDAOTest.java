@@ -152,5 +152,19 @@ class SuperUserDAOTest {
 
     @Test
     void removeFactory() {
+        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        if(superdao.addFactory("f1"))
+            System.out.println("factory added");
+        else System.out.println("error");
+        if(superdao.addFactory("f2"))
+            System.out.println("factory added");
+        else System.out.println("error");
+
+        if(superdao.removeFactory("f1"))
+            System.out.println("factory removed");
+        else System.out.println("error");
+        if(superdao.removeFactory("f1"))
+            System.out.println("factory removed");
+        else System.out.println("error");
     }
 }
