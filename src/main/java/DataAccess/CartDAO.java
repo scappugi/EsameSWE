@@ -32,10 +32,11 @@ public class CartDAO {
         }
     }
 
-    public void payCartItem(Cart cart, String username) {
+    public boolean payCartItem(Cart cart, String username) {
         int userid = -1;
         int orderid = -1;
         Map<Clothes, Integer> mymap = cart.getMap();
+        boolean flag = false;
 
         //get the userid from username
         String queryuser = "SELECT codUser FROM WebUser WHERE userName = ?";
@@ -53,10 +54,10 @@ public class CartDAO {
         codorder++;
         String queryorder = "INSERT INTO Orders(codOrder, date, shipmentDate, userID) VALUES (?, ?, ?, ?)";
         try (PreparedStatement orderStatement = connection.prepareStatement(queryorder)) {
-            orderStatement.setInt(1,codorder);
+            orderStatement.setInt(1, codorder);
             orderStatement.setDate(2, Date.valueOf(LocalDate.now()));
-            orderStatement.setDate(3,Date.valueOf(LocalDate.now().plusDays(3)));
-            orderStatement.setInt(4,userid);
+            orderStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
+            orderStatement.setInt(4, userid);
             orderStatement.executeUpdate();
 
             //get orderid
@@ -68,24 +69,22 @@ public class CartDAO {
             //Insert into Contains
             String querycontains = "INSERT INTO Contains(orderID, clothesID, qnt) VALUES (?, ?, ?)";
             PreparedStatement containStatement = connection.prepareStatement(querycontains);
-            for(Map.Entry<Clothes, Integer> entry : mymap.entrySet()){
+            for (Map.Entry<Clothes, Integer> entry : mymap.entrySet()) {
                 Clothes clothes = entry.getKey();
                 int qty = entry.getValue();
 
-                containStatement.setInt(1,orderid);
-                containStatement.setInt(2,clothes.getCodclothes());
-                containStatement.setInt(3,qty);
+                containStatement.setInt(1, orderid);
+                containStatement.setInt(2, clothes.getCodclothes());
+                containStatement.setInt(3, qty);
                 containStatement.executeUpdate();
             }
 
+            flag = true;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        return flag;
     }
 
-
 }
-
-

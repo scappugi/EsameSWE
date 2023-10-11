@@ -77,6 +77,6 @@ class CartDAOTest {
             throw new RuntimeException(e);
         }
 
-        cartdao.payCartItem(cart, "user1");
+        assertEquals(true,cartdao.payCartItem(cart, "user1"));
     }
 }
