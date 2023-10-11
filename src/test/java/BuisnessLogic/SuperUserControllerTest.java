@@ -51,14 +51,11 @@ class SuperUserControllerTest {
         SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
+
         //try to insert a factory that is already in the db
-        if (controller.addFactory("f1"))
-            System.out.println("factory added");
-        else System.out.println("factory already present");
+        assertEquals(false, controller.addFactory("f1"));
         //insert a factory that isn't in the db
-        if (controller.addFactory("f4"))
-            System.out.println("factory added");
-        else System.out.println("factory already present");
+        assertEquals(true, controller.addFactory("f4"));
     }
 
     @Test
@@ -66,14 +63,11 @@ class SuperUserControllerTest {
         SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
+
         //try to remove a factory that is  in the db
-        if (controller.removeFactory("f1"))
-            System.out.println("factory removed");
-        else System.out.println("factory not found");
+        assertEquals(true, controller.removeFactory("f1"));
         //remove a factory that isn't in the db
-        if (controller.removeFactory("f4"))
-            System.out.println("factory removed");
-        else System.out.println("factory not found");
+        assertEquals(false, controller.removeFactory("f4"));
     }
 
     @Test
@@ -82,13 +76,8 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
-            System.out.println("new clothes created");
-        else System.out.println("error");
-
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f5", 3))
-            System.out.println("new clothes created");
-        else System.out.println("error");
+        assertEquals(true, controller.addNewClothes("shirt", "m", "red", 20, "f1", 1));
+        assertEquals(false, controller.addNewClothes("shirt", "m", "red", 20, "f5", 3));
     }
 
     @Test
@@ -97,15 +86,9 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
-            System.out.println("new clothes created");
-        else System.out.println("error");
-        if (controller.modifyExistingClothes(1, 10))
-            System.out.println("qty updated");
-        else System.out.println("clothes not found");
-        if (controller.modifyExistingClothes(5, 10))
-            System.out.println("qty updated");
-        else System.out.println("clothes not found");
+        assertEquals(true, controller.addNewClothes("shirt", "m", "red", 20, "f1", 1));
+        assertEquals(true, controller.modifyExistingClothes(1, 10));
+        assertEquals(false, controller.modifyExistingClothes(5, 10));
     }
 
     @Test
@@ -114,14 +97,8 @@ class SuperUserControllerTest {
         SuperUser superuser = SuperUser.getInstance(1, "super", "password");
         SuperUserController controller = new SuperUserController(superuser, superdao);
 
-        if (controller.addNewClothes("shirt", "m", "red", 20, "f1", 1))
-            System.out.println("new clothes created");
-        else System.out.println("factory not present");
-        if (controller.deleteExistingClothes(1))
-            System.out.println("clothes removed");
-        else System.out.println("clothes not found");
-        if (controller.modifyExistingClothes(5, 10))
-            System.out.println("qty updated");
-        else System.out.println("clothes not found");
+        assertEquals(true, controller.addNewClothes("shirt", "m", "red", 20, "f1", 1));
+        assertEquals(true, controller.deleteExistingClothes(1));
+        assertEquals(false, controller.modifyExistingClothes(5, 10));
     }
 }
