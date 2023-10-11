@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import static java.time.LocalDate.*;
 
@@ -77,7 +79,7 @@ class RegisteredWebUserControllerTest {
             preparedStatement.setInt(1, 1);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            preparedStatement.setInt(4, 5);
+            preparedStatement.setInt(4, 25);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -85,9 +87,9 @@ class RegisteredWebUserControllerTest {
         }
 
         controller.accessPrivateArea();
-        for(Order it : user.getPrivateArea().getOrders()){
-            it.show();
-        }
+        assertEquals(1,user.getPrivateArea().getOrders().size());
+        /*for(Order it : user.getPrivateArea().getOrders())
+            it.show();*/
     }
 
     @Test
@@ -132,9 +134,8 @@ class RegisteredWebUserControllerTest {
         }
 
         Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
-        if(controller.addClothesToCart(clothes, 2))
-            System.out.println("add new clothes");
-        else System.out.println("not enough quantity");
+        assertEquals(true,controller.addClothesToCart(clothes, 2));
+        assertEquals(false,controller.addClothesToCart(clothes, 2));
     }
 
     @Test
@@ -179,13 +180,9 @@ class RegisteredWebUserControllerTest {
         }
 
         Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
-        if(controller.addClothesToCart(clothes, 2))
-            System.out.println("add new clothes");
-        else System.out.println("not enough quantity");
-
-        if(controller.removeClothesFromCart(clothes))
-            System.out.println("clothes removed");
-        else System.out.println("clothes not found");
+        assertEquals(true,controller.addClothesToCart(clothes, 2));
+        assertEquals(true, controller.removeClothesFromCart(clothes));
+        assertEquals(false, controller.removeClothesFromCart(clothes));
     }
 
     @Test
@@ -229,14 +226,11 @@ class RegisteredWebUserControllerTest {
             throw new RuntimeException(e);
         }
 
-        Shirt clothes = new Shirt(20,"brand1", "m", "red", 17);
-        if(controller.addClothesToCart(clothes, 2))
-            System.out.println("add new clothes");
-        else System.out.println("not enough quantity");
+        Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
+        assertEquals(true,controller.addClothesToCart(clothes, 2));
+        assertEquals(true,controller.modifyQuantityClothesFromCart(clothes,1));
+        assertEquals(false,controller.modifyQuantityClothesFromCart(clothes,80));
 
-        if(controller.modifyQuantityClothesFromCart(clothes, 3))
-            System.out.println("qty modified");
-        else System.out.println("error");
     }
 
     @Test
@@ -280,14 +274,9 @@ class RegisteredWebUserControllerTest {
             throw new RuntimeException(e);
         }
 
-        Shirt clothes = new Shirt(20,"brand1", "m", "red", 20);
-        if(controller.addClothesToCart(clothes, 2))
-            System.out.println("add new clothes");
-        else System.out.println("not enough quantity");
-
-        if(controller.buyCart())
-            System.out.println("cart payed");
-        else System.out.println("cart empty");
+        Shirt clothes = new Shirt(20,"brand1", "m", "red", 1);
+        assertEquals(true,controller.addClothesToCart(clothes, 2));
+        assertEquals(true,controller.buyCart());
     }
 
     @Test
@@ -313,9 +302,7 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        if(controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())))
-            System.out.println("card added");
-        else System.out.println("card already present");
+        assertEquals(true,controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())));
     }
 
     @Test
@@ -341,13 +328,9 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        if(controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())))
-            System.out.println("card added");
-        else System.out.println("card already present");
+        assertEquals(true,controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())));
+        assertEquals(true,controller.removeDebitCard(1, 111));
 
-        if(controller.removeDebitCard(1, 111))
-            System.out.println("card removed");
-        else System.out.println("card not found");
     }
 
     @Test
@@ -373,13 +356,11 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        if(controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())))
-            System.out.println("card added");
-        else System.out.println("card already present");
-
+        assertEquals(true,controller.addCDebitCard(1,111, Date.valueOf(LocalDate.now())));
         ArrayList<DebitCard> result = controller.getAllCard();
-        for(DebitCard it : result)
-            it.show();
+        assertNotNull(result);
+        /*for(DebitCard it : result)
+            it.show();*/
     }
 
 }

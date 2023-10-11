@@ -65,6 +65,7 @@ public class RegisteredWebUserController {
 
     public boolean modifyQuantityClothesFromCart(Clothes clothes, int newqty) {
         boolean found = registeredwebuser.getCart().getMap().containsKey(clothes);
+        boolean flag = false;
         int qty = (int) registeredwebuser.getCart().getMap().get(clothes);
         int qtyclothes = homepageDAO.checkAvailability(clothes);
         int difference = 0;
@@ -73,15 +74,17 @@ public class RegisteredWebUserController {
                 difference = qty - newqty;
                 homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes + difference);
                 registeredwebuser.getCart().getMap().put(clothes, newqty);
+                flag = true;
             } else { //newqty > qty
                 difference = newqty - qty;
                 if (homepageDAO.checkAvailability(clothes) - difference >= 0) {
                     registeredwebuser.getCart().getMap().put(clothes, newqty);
                     homepageDAO.updateAvailability(clothes.getCodclothes(), qtyclothes - difference);
+                    flag = true;
                 }
             }
         }
-        return found;
+        return found&flag;
     }
 
     public boolean buyCart() {
