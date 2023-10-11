@@ -50,102 +50,89 @@ class HomePageDAOTest {
     @Test
     void registerUser() {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        boolean flag = false;
-        try {
-            flag = homepagedao.registerUser("user1", "password");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (flag)
-            System.out.println("new user registered");
-        else System.out.println("user already present");
 
-        //test fail
         try {
-            flag = homepagedao.registerUser("user1", "password");
+            assertEquals(true,homepagedao.registerUser("user1", "password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if (flag)
-            System.out.println("new user registered");
-        else System.out.println("user already present");
+        //fail test
+        try {
+            assertEquals(false,homepagedao.registerUser("user1", "password"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Test
     void login() {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        boolean flag = false;
-        RegisteredWebUser user = null;
+
         try {
-            flag = homepagedao.registerUser("user1", "password");
-            user = homepagedao.login("user1", "password");
+            assertEquals(true,homepagedao.registerUser("user1", "password"));
+            assertNotNull(homepagedao.login("user1", "password"));
+            assertNull(homepagedao.login("user2", "password2"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if (flag)
-            System.out.println("new user registered");
-        else System.out.println("user already present");
 
-
-        if (user != null)
-            System.out.println("user logged");
-        else System.out.println("user not found");
     }
 
     @Test
     void registerCreditCard() {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        boolean flag = false;
+
         try {
-            homepagedao.registerUser("user1", "password");
+            assertEquals(true,homepagedao.registerUser("user1", "password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
-        flag = homepagedao.registerCreditCard(card, "user1");
-        if (flag)
-            System.out.println("new card registered");
-        else System.out.println("card already present");
+        assertEquals(true,homepagedao.registerCreditCard(card, "user1"));
+        assertEquals(false,homepagedao.registerCreditCard(card, "user3"));
+
     }
 
     @Test
     void removeCreditCard() {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        boolean flag = false;
+
         try {
-            homepagedao.registerUser("user1", "password");
+            assertEquals(true,homepagedao.registerUser("user1", "password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
-        homepagedao.registerCreditCard(card, "user1");
-        flag = homepagedao.removeCreditCard(1, 111, "user1");
-        if (flag)
-            System.out.println("card removed");
-        else System.out.println("card not found");
+        assertEquals(true,homepagedao.registerCreditCard(card, "user1"));
+        assertEquals(false,homepagedao.removeCreditCard(67, 111, "user1"));
+        assertEquals(true,homepagedao.removeCreditCard(1, 111, "user1"));
+
+
     }
 
     @Test
     void getAllDebitCards() {
         HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        boolean flag = false;
+
         try {
-            homepagedao.registerUser("user1", "password");
+            assertEquals(true,homepagedao.registerUser("user1", "password"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         DebitCard card = new DebitCard(1, 111, Date.valueOf(LocalDate.now()));
-        flag = homepagedao.registerCreditCard(card, "user1");
-        if (flag)
-            System.out.println("new card registered");
-        else System.out.println("card already present");
+        assertEquals(true,homepagedao.registerCreditCard(card, "user1"));
+        DebitCard card2 = new DebitCard(2, 222, Date.valueOf(LocalDate.now()));
+        assertEquals(true,homepagedao.registerCreditCard(card2, "user1"));
+        assertEquals(false,homepagedao.registerCreditCard(card, "user2"));
 
         ArrayList<DebitCard> result = homepagedao.getAllDebitCards("user1");
-        for(DebitCard it : result)
-            it.show();
+        assertEquals(2,result.size());
+        /*for (DebitCard it : result)
+            it.show();*/
     }
 
     @Test
@@ -161,7 +148,7 @@ class HomePageDAOTest {
             preparedStatement.setString(3, "shirt");
             preparedStatement.setString(4, "brand1");
             preparedStatement.setString(5, "m");
-            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(6, 1);
             preparedStatement.setInt(7, 10);
             preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
@@ -171,7 +158,7 @@ class HomePageDAOTest {
         }
 
         Clothes clothes1 = new Shirt(20, "brand1", "m", "red", 1);
-        System.out.println("qty : " + homepagedao.checkAvailability(clothes1));
+        assertEquals(10, homepagedao.checkAvailability(clothes1));
 
     }
 
@@ -188,7 +175,7 @@ class HomePageDAOTest {
             preparedStatement.setString(3, "shirt");
             preparedStatement.setString(4, "brand1");
             preparedStatement.setString(5, "m");
-            preparedStatement.setInt(6,1);
+            preparedStatement.setInt(6, 1);
             preparedStatement.setInt(7, 10);
             preparedStatement.setFloat(8, 20);
             preparedStatement.executeUpdate();
@@ -198,7 +185,8 @@ class HomePageDAOTest {
         }
 
         Clothes clothes1 = new Shirt(20, "brand1", "m", "red", 1);
-        System.out.println("qty : " + homepagedao.checkAvailability(clothes1));
-        homepagedao.updateAvailability(1, 2);
+        assertEquals(10, homepagedao.checkAvailability(clothes1));
+        homepagedao.updateAvailability(1, 20);
+        assertEquals(20,homepagedao.checkAvailability(clothes1));
     }
 }

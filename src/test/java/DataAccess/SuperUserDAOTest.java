@@ -64,15 +64,9 @@ class SuperUserDAOTest {
             throw new RuntimeException(e);
         }
 
-        if(superdao.addNewClothes(clothes, "f1", 10))
-            System.out.println("add new clothes");
-        else System.out.println("error");
-        if(superdao.addNewClothes(clothes2, "f1", 20))
-            System.out.println("add new clothes");
-        else System.out.println("error");
-        if(superdao.addNewClothes(clothes, "f2", 10))
-            System.out.println("add new clothes");
-        else System.out.println("error");
+        assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
+        assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
+        assertEquals(false, superdao.addNewClothes(clothes, "f2", 10));
     }
 
     @Test
@@ -92,19 +86,11 @@ class SuperUserDAOTest {
             throw new RuntimeException(e);
         }
 
-        if(superdao.addNewClothes(clothes, "f1", 10))
-            System.out.println("add new clothes");
-        else System.out.println("error");
-        if(superdao.addNewClothes(clothes2, "f1", 20))
-            System.out.println("add new clothes");
-        else System.out.println("error");
+        assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
+        assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
+        assertEquals(true, superdao.removeClothes(1));
+        assertEquals(false, superdao.removeClothes(1));
 
-        if(superdao.removeClothes(1))
-            System.out.println("clothes removed");
-        else System.out.println("error");
-        if(superdao.removeClothes(1))
-            System.out.println("clothes removed");
-        else System.out.println("error");
     }
 
     @Test
@@ -124,47 +110,30 @@ class SuperUserDAOTest {
             throw new RuntimeException(e);
         }
 
-        if(superdao.addNewClothes(clothes, "f1", 10))
-            System.out.println("add new clothes");
-        else System.out.println("error");
-        if(superdao.addNewClothes(clothes2, "f1", 20))
-            System.out.println("add new clothes");
-        else System.out.println("error");
 
-        if(superdao.updateQtyClothes(1, 55))
-            System.out.println("qty updated");
-        else System.out.println("error");
-        if(superdao.updateQtyClothes(5, 55))
-            System.out.println("qty updated");
-        else System.out.println("error");
+        assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
+        assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
+        assertEquals(true, superdao.updateQtyClothes(1,55));
+        assertEquals(false, superdao.updateQtyClothes(5,55));
+
     }
 
     @Test
     void addFactory() {
         SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
-        if(superdao.addFactory("f1"))
-            System.out.println("factory added");
-        else System.out.println("error");
-        if(superdao.addFactory("f1"))
-            System.out.println("factory added");
-        else System.out.println("error");
+
+        assertEquals(true, superdao.addFactory("f1"));
+        assertEquals(false, superdao.addFactory("f1"));
     }
 
     @Test
     void removeFactory() {
         SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
-        if(superdao.addFactory("f1"))
-            System.out.println("factory added");
-        else System.out.println("error");
-        if(superdao.addFactory("f2"))
-            System.out.println("factory added");
-        else System.out.println("error");
 
-        if(superdao.removeFactory("f1"))
-            System.out.println("factory removed");
-        else System.out.println("error");
-        if(superdao.removeFactory("f1"))
-            System.out.println("factory removed");
-        else System.out.println("error");
+        assertEquals(true, superdao.addFactory("f1"));
+        assertEquals(true, superdao.addFactory("f2"));
+        assertEquals(true, superdao.removeFactory("f1"));
+        assertEquals(false, superdao.removeFactory("f1"));
+
     }
 }

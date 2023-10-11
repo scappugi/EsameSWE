@@ -43,6 +43,7 @@ class PrivateAreaDAOTest {
         }
 
     }
+
     @Test
     void populatePrivateArea() {
         PrivateAreaDAO privatedao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
@@ -66,7 +67,7 @@ class PrivateAreaDAOTest {
             preparedStatement.setInt(1, 1);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            preparedStatement.setInt(4, 15);
+            preparedStatement.setInt(4, 6);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -75,8 +76,8 @@ class PrivateAreaDAOTest {
 
         PrivateArea privatearea = new PrivateArea();
         privatedao.populatePrivateArea(privatearea, "user1");
-        for(Order it : privatearea.getOrders())
-            it.show();
-
+        assertEquals(1, privatearea.getOrders().size());
+        /*for (Order it : privatearea.getOrders())
+            it.show();*/
     }
 }
