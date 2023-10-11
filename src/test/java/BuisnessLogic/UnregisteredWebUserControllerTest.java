@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class UnregisteredWebUserControllerTest {
@@ -53,19 +54,14 @@ class UnregisteredWebUserControllerTest {
         UnregisteredWebUser user = new UnregisteredWebUser();
         HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
         UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
+
         try {
-            RegisteredWebUser registered = controller.registerWebUser("user1", "password1");
-            System.out.println(registered.getUsername());
+            assertNotNull(controller.registerWebUser("user1", "password1"));
+            assertNull(controller.registerWebUser("user1", "password1"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        try {
-            RegisteredWebUser registered = controller.registerWebUser("user1", "password1");
-            if (registered == null)
-                System.out.println("User already registered");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     @Test
@@ -97,10 +93,9 @@ class UnregisteredWebUserControllerTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<Clothes> results = controller.searchByPrice(60);
-        for(Clothes it : results){
-            System.out.println(it.getPrice());
-        }
+       assertNotNull(controller.searchByPrice(60));
+        /*for(Clothes it : results)
+            System.out.println(it.getPrice());*/
     }
 
     @Test
@@ -132,10 +127,9 @@ class UnregisteredWebUserControllerTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<Clothes> results = controller.searchBySize("m");
-        for(Clothes it : results){
-            System.out.println(it.getSize());
-        }
+        assertNotNull(controller.searchBySize("m"));
+        /*for(Clothes it : results)
+            System.out.println(it.getPrice());*/
     }
 
     @Test
@@ -167,9 +161,8 @@ class UnregisteredWebUserControllerTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ArrayList<Clothes> results = controller.searchByBrand("brand1");
-        for(Clothes it : results){
-            System.out.println(it.getBrand());
-        }
+        assertNotNull(controller.searchByBrand("brand1"));
+        /*for(Clothes it : results)
+            System.out.println(it.getPrice());*/
     }
 }
