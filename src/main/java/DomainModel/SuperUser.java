@@ -23,7 +23,7 @@ public class SuperUser extends WebUser {
 
     }
 
-    public static SuperUser getInstance(int code, String username, String password) {
+    public static SuperUser getInstance(String username, String password) {
         if (istance == null)
             istance = new SuperUser(username, password);
         return istance;

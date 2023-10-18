@@ -15,7 +15,7 @@ class PrivateAreaDAOTest {
     @BeforeEach
     void setUp() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             String delete1 = "DELETE FROM Clothes";
             String delete2 = "DELETE FROM Contains";
             String delete3 = "DELETE FROM DebitCard";
@@ -36,6 +36,7 @@ class PrivateAreaDAOTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+            DataBase.closeConnection(connection);
 
 
         } catch (SQLException e) {
@@ -46,29 +47,33 @@ class PrivateAreaDAOTest {
 
     @Test
     void populatePrivateArea() {
-        PrivateAreaDAO privatedao = new PrivateAreaDAO("C:/sqlite/ShopOnline.db");
+        PrivateAreaDAO privatedao = new PrivateAreaDAO();
 
         //create user
         String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = privatedao.getConnection();
+        Connection connection = null;
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "user1");
             preparedStatement.setString(2, "password");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         //create order
-        String query1 = "INSERT INTO Orders(codOrder, date, shipmentDate, userID) VALUES (?, ?, ?, ?)";
+        String query1 = "INSERT INTO Orders(codOrder, date, shipmentDate, user) VALUES (?, ?, ?, ?)";
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query1);
             preparedStatement.setInt(1, 1);
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
             preparedStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            preparedStatement.setInt(4, 6);
+            preparedStatement.setString(4, "user1");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -77,7 +82,5 @@ class PrivateAreaDAOTest {
         PrivateArea privatearea = new PrivateArea();
         privatedao.populatePrivateArea(privatearea, "user1");
         assertEquals(1, privatearea.getOrders().size());
-        /*for (Order it : privatearea.getOrders())
-            it.show();*/
     }
 }

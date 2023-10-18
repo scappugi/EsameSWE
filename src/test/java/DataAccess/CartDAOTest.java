@@ -20,7 +20,7 @@ class CartDAOTest {
     @BeforeEach
     void setUp() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             String delete1 = "DELETE FROM Clothes";
             String delete2 = "DELETE FROM Contains";
             String delete3 = "DELETE FROM DebitCard";
@@ -41,6 +41,7 @@ class CartDAOTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+            DataBase.closeConnection(connection);
 
 
         } catch (SQLException e) {
@@ -51,8 +52,8 @@ class CartDAOTest {
 
     @Test
     void payCartItem() {
-        HomePageDAO homepagedao = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        CartDAO cartdao = new CartDAO("C:/sqlite/ShopOnline.db", homepagedao);
+        HomePageDAO homepagedao = new HomePageDAO();
+        CartDAO cartdao = new CartDAO(homepagedao);
 
         Cart cart = new Cart();
         Clothes clothes1 = new Shirt(30, "brand1", "m", "red", 1);
@@ -66,12 +67,14 @@ class CartDAOTest {
         cart.getMap().put(clothes4, 20);
 
         String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = homepagedao.getConnection();
+        Connection connection = null;
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "user1");
             preparedStatement.setString(2, "password");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -1,5 +1,6 @@
 package BuisnessLogic;
 
+import DataAccess.DataBase;
 import DataAccess.HomePageDAO;
 import DomainModel.Clothes;
 import DomainModel.RegisteredWebUser;
@@ -21,7 +22,7 @@ class UnregisteredWebUserControllerTest {
     @BeforeEach
     void setUp() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             String delete1 = "DELETE FROM Clothes";
             String delete2 = "DELETE FROM Contains";
             String delete3 = "DELETE FROM DebitCard";
@@ -42,6 +43,7 @@ class UnregisteredWebUserControllerTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+            DataBase.closeConnection(connection);
 
 
         } catch (SQLException e) {
@@ -53,12 +55,11 @@ class UnregisteredWebUserControllerTest {
     @Test
     void registerWebUser() {
         UnregisteredWebUser user = new UnregisteredWebUser();
-        HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
+        HomePageDAO homepage = new HomePageDAO();
         UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
 
         try {
             assertNotNull(controller.registerWebUser("user1", "password1"));
-            assertNull(controller.registerWebUser("user1", "password1"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

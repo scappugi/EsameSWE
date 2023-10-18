@@ -13,74 +13,44 @@ public class CartDAO {
     private static int codorder = 0;
     private Connection connection;
 
-    public CartDAO(String databaseURL, HomePageDAO homepageDAO) {
+    public CartDAO(HomePageDAO homepageDAO) {
         this.homepageDAO = homepageDAO;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean payCartItem(Cart cart, String username) {
-        int userid = -1;
-        int orderid = -1;
         Map<Clothes, Integer> mymap = cart.getMap();
         boolean flag = false;
-
-        //get the userid from username
-        String queryuser = "SELECT codUser FROM WebUser WHERE userName = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(queryuser)) {
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                userid = resultSet.getInt("codUser");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PreparedStatement orderStatement = null;
+        Connection connection = null;
+        int qty;
 
         //Create order
-        codorder++;
-        String queryorder = "INSERT INTO Orders(codOrder, date, shipmentDate, userID) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement orderStatement = connection.prepareStatement(queryorder)) {
+        String queryorder = "INSERT INTO Orders(codOrder, date, shipmentDate, user) VALUES (?, ?, ?, ?)";
+        try {
+            codorder++;
+            connection = DataBase.getConnection();
+            orderStatement = connection.prepareStatement(queryorder);
             orderStatement.setInt(1, codorder);
             orderStatement.setDate(2, Date.valueOf(LocalDate.now()));
             orderStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            orderStatement.setInt(4, userid);
+            orderStatement.setString(4, username);
             orderStatement.executeUpdate();
-
-            //get orderid
-            try (ResultSet generatedkey = orderStatement.getGeneratedKeys()) {
-                if (generatedkey.next())
-                    orderid = generatedkey.getInt(1);
-            }
-
+            DataBase.closeConnection(connection);
             //Insert into Contains
             String querycontains = "INSERT INTO Contains(orderID, clothesID, qnt) VALUES (?, ?, ?)";
+            connection = DataBase.getConnection();
             PreparedStatement containStatement = connection.prepareStatement(querycontains);
             for (Map.Entry<Clothes, Integer> entry : mymap.entrySet()) {
                 Clothes clothes = entry.getKey();
-                int qty = entry.getValue();
-
-                containStatement.setInt(1, orderid);
+                qty = entry.getValue();
+                containStatement.setInt(1, codorder);
                 containStatement.setInt(2, clothes.getCodclothes());
                 containStatement.setInt(3, qty);
                 containStatement.executeUpdate();
             }
-
+            DataBase.closeConnection(connection);
             flag = true;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

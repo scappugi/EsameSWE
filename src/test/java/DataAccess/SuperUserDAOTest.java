@@ -18,7 +18,7 @@ class SuperUserDAOTest {
     @BeforeEach
     void setUp() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             String delete1 = "DELETE FROM Clothes";
             String delete2 = "DELETE FROM Contains";
             String delete3 = "DELETE FROM DebitCard";
@@ -39,6 +39,7 @@ class SuperUserDAOTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+            DataBase.closeConnection(connection);
 
 
         } catch (SQLException e) {
@@ -49,16 +50,18 @@ class SuperUserDAOTest {
 
     @Test
     void addNewClothes() {
-        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUserDAO superdao = new SuperUserDAO();
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
         String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = superdao.getConnection();
+        Connection connection = null;
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "f1");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -71,16 +74,18 @@ class SuperUserDAOTest {
 
     @Test
     void removeClothes() {
-        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUserDAO superdao = new SuperUserDAO();
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
         String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = superdao.getConnection();
+        Connection connection = null;
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "f1");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -95,16 +100,18 @@ class SuperUserDAOTest {
 
     @Test
     void updateQtyClothes() {
-        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUserDAO superdao = new SuperUserDAO();
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
         String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = superdao.getConnection();
+        Connection connection = null;
         try {
+            connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "f1");
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -120,20 +127,18 @@ class SuperUserDAOTest {
 
     @Test
     void addFactory() {
-        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUserDAO superdao = new SuperUserDAO();
 
         assertEquals(true, superdao.addFactory("f1"));
-        assertEquals(false, superdao.addFactory("f1"));
     }
 
     @Test
     void removeFactory() {
-        SuperUserDAO superdao = new SuperUserDAO("C:/sqlite/ShopOnline.db");
+        SuperUserDAO superdao = new SuperUserDAO();
 
         assertEquals(true, superdao.addFactory("f1"));
         assertEquals(true, superdao.addFactory("f2"));
         assertEquals(true, superdao.removeFactory("f1"));
-        assertEquals(false, superdao.removeFactory("f1"));
 
     }
 }

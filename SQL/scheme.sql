@@ -7,8 +7,7 @@ DROP TABLE IF EXISTS Contains;
 
 
 CREATE TABLE WebUser (
-    codUser INTEGER PRIMARY KEY AUTOINCREMENT,
-    userName TEXT,
+    userName TEXT PRIMARY KEY,
     password TEXT
 );
 
@@ -17,14 +16,13 @@ CREATE TABLE DebitCard (
     codCard TEXT,
     CVV TEXT,
     date DATE,
-    userID TEXT,
+    user TEXT,
     PRIMARY KEY (codCard, CVV),
-    FOREIGN KEY (userID) REFERENCES WebUser(codUser)
+    FOREIGN KEY (user) REFERENCES WebUser(userName)
 );
 
 CREATE TABLE Factory (
-    codStorage integer PRIMARY KEY AUTOINCREMENT,
-    name TEXT
+    name TEXT PRIMARY KEY
 );
 
 CREATE TABLE Clothes (
@@ -33,10 +31,10 @@ CREATE TABLE Clothes (
     category TEXT,
     brand TEXT,
     size TEXT,
-    storageID TEXT,
+    factory TEXT,
     qty integer,
     price float,
-    FOREIGN KEY (StorageID) REFERENCES Storage(codStorage)
+    FOREIGN KEY (factory) REFERENCES Factory(name)
 );
 
 
@@ -44,8 +42,8 @@ CREATE TABLE Orders (
     codOrder INTEGER PRIMARY KEY,
     date DATE,
     shipmentDate DATE,
-    userID INTEGER,
-    FOREIGN KEY (userID) REFERENCES WebUser(codUser)
+    user TEXT,
+    FOREIGN KEY (user) REFERENCES WebUser(userName)
 );
 
 CREATE TABLE Contains (

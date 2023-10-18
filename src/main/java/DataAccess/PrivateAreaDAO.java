@@ -12,29 +12,18 @@ public class PrivateAreaDAO {
 
     private Connection connection;
 
-    public PrivateAreaDAO(String databaseURL) {
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public PrivateAreaDAO() {
     }
 
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private Map<Clothes, Integer> getOrderDetails(int orderId) {
         Map<Clothes, Integer> orderDetails = new HashMap<>();
+        PreparedStatement preparedStatement = null;
 
         String query = "SELECT clothesID, qnt FROM Contains WHERE orderID = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, orderId);
             ResultSet containsResultSet = preparedStatement.executeQuery();
             while (containsResultSet.next()) {
@@ -46,6 +35,7 @@ public class PrivateAreaDAO {
                     orderDetails.put(clothes, quantity);
                 }
             }
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -54,8 +44,12 @@ public class PrivateAreaDAO {
 
     private Clothes getClothes(int clothesId) {
         Clothes clothes = null;
+        PreparedStatement preparedStatement = null;
+
         String query = "SELECT * FROM Clothes WHERE codClothes = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, clothesId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -65,13 +59,14 @@ public class PrivateAreaDAO {
                 String color = resultSet.getString("color");
                 String category = resultSet.getString("category");
 
-                if(category.equals("shirt"))
+                if (category.equals("shirt"))
                     clothes = new Shirt(price, brand, size, color, clothesId);
-                if(category.equals("sweatshirt"))
+                if (category.equals("sweatshirt"))
                     clothes = new Sweatshirt(price, brand, size, color, clothesId);
-                if(category.equals("trousers"))
-                    clothes = new Trousers(price, brand, size, color,clothesId);
+                if (category.equals("trousers"))
+                    clothes = new Trousers(price, brand, size, color, clothesId);
             }
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -81,12 +76,14 @@ public class PrivateAreaDAO {
 
     public void populatePrivateArea(PrivateArea privatearea, String username) {
         Map<Clothes, Integer> mymap;
+        PreparedStatement preparedStatement = null;
 
-        String query = "SELECT * FROM Orders,WebUser WHERE userName = ? AND codUser = Orders.userID";
+        String query = "SELECT * FROM Orders WHERE user = ? ";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
-            System.out.println(getUserIdByUsername(username));
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -98,25 +95,10 @@ public class PrivateAreaDAO {
                 Order order = new Order(id, ordered, shipment, username, mymap);
                 privatearea.getOrders().add(order);
             }
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private int getUserIdByUsername(String username) throws SQLException {
-        String selectQuery = "SELECT codUser FROM WebUser WHERE userName = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setString(1, username);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            return resultSet.getInt("codUser");
-        }
-
-        return -1;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
 }

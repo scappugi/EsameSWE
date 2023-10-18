@@ -7,59 +7,35 @@ import java.util.ArrayList;
 
 public class HomePageDAO {
 
-    private Connection connection;
-
-    public HomePageDAO(String databaseURL) {
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseURL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public HomePageDAO() {
     }
 
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean registerUser(String username, String password) throws SQLException {
-        if (getUserIdByUsername(username) == -1) {
-            String query = "INSERT INTO WebUser (UserName, Password) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-
-            // insert element into db
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            // close declaration
-            preparedStatement.close();
-
-            // Se è stato inserito almeno un record, la registrazione ha successo
-            if (rowsAffected > 0)
-                return true;
-
-            else return false;
-        }
-        return false; // the user is already registred
+        Connection connection = DataBase.getConnection();
+        String query = "INSERT INTO WebUser (UserName, Password) VALUES (?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        preparedStatement.executeUpdate();
+        DataBase.closeConnection(connection);
+        return true;
     }
 
     public RegisteredWebUser login(String username, String password) {
         String query = "SELECT * FROM WebUser WHERE username = ? AND password = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
             // If there is a line in the result, it means the credentials are correct
             if (resultSet.next()) {
+                DataBase.closeConnection(connection);
                 return new RegisteredWebUser(username, password);
             }
         } catch (SQLException e) {
@@ -68,58 +44,39 @@ public class HomePageDAO {
         // If there is no match, return false
         return null;
     }
-   /* public void logout(RegisteredWebUser registeredwebuser) {
-        registeredwebuser.setLogged(false);
-    }*/
 
     public boolean registerCreditCard(DebitCard debitcard, String username) {
-        int codUser = 0;
-        String selectQuery = "SELECT * FROM WebUser WHERE userName = ?"; //ricerca user
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(selectQuery);
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                // Leggi i dati dell'utente dal ResultSet e crea un oggetto WebUser
-                codUser = resultSet.getInt("codUser"); //una volta trovato l' user inserisce la carta
-                String insertQuery = "INSERT INTO DebitCard (codCard, CVV, Date, UserID) VALUES (?, ?, ?, ?)";
-                PreparedStatement preparedStatement1 = connection.prepareStatement(insertQuery);
-                preparedStatement1.setInt(1, debitcard.getCodCard());
-                preparedStatement1.setInt(2, debitcard.getCVV());
-                preparedStatement1.setDate(3, (Date) debitcard.getDate());
-                preparedStatement1.setInt(4, codUser);
-
-                int rowsInserted = preparedStatement1.executeUpdate();
-                return rowsInserted > 0; //se aggiungo almeno una riga ritorno true
-            }
+            Connection connection = DataBase.getConnection();
+            String insertQuery = "INSERT INTO DebitCard (codCard, CVV, Date, user) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement1 = connection.prepareStatement(insertQuery);
+            preparedStatement1.setInt(1, debitcard.getCodCard());
+            preparedStatement1.setInt(2, debitcard.getCVV());
+            preparedStatement1.setDate(3, (Date) debitcard.getDate());
+            preparedStatement1.setString(4, username);
+            preparedStatement1.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
+        return true;
     }
 
     public boolean removeCreditCard(int cardNumber, int CVV, String username) {
         try {
-            int userId = getUserIdByUsername(username);
-
-            if (userId != -1) {
-                String deleteQuery = "DELETE FROM DebitCard WHERE codCard = ? AND CVV = ? AND UserID = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-                preparedStatement.setInt(1, cardNumber);
-                preparedStatement.setInt(2, CVV);
-                preparedStatement.setInt(3, userId);
-
-                int rowsDeleted = preparedStatement.executeUpdate();
-
-                return rowsDeleted > 0;
-            }
+            Connection connection = DataBase.getConnection();
+            String deleteQuery = "DELETE FROM DebitCard WHERE codCard = ? AND CVV = ? AND user = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+            preparedStatement.setInt(1, cardNumber);
+            preparedStatement.setInt(2, CVV);
+            preparedStatement.setString(3, username);
+            preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return false;
+        return true;
     }
 
 
@@ -127,54 +84,42 @@ public class HomePageDAO {
         ArrayList<DebitCard> debitCards = new ArrayList<>();
 
         try {
-            // found the id by the username
-            int userId = getUserIdByUsername(username);
+            Connection connection = DataBase.getConnection();
+            String selectQuery = "SELECT * FROM DebitCard WHERE user = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (userId != -1) {
-                String selectQuery = "SELECT * FROM DebitCard WHERE UserID = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-                preparedStatement.setInt(1, userId);
-                ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int cardNumber = resultSet.getInt("codCard");
+                int cvv = resultSet.getInt("CVV");
+                Date cardDate = resultSet.getDate("date");
 
-                while (resultSet.next()) {
-                    int cardNumber = resultSet.getInt("codCard");
-                    int cvv = resultSet.getInt("CVV");
-                    Date cardDate = resultSet.getDate("date");
-
-                    DebitCard debitCard = new DebitCard(cardNumber, cvv, cardDate);
-                    debitCards.add(debitCard);
-                }
+                DebitCard debitCard = new DebitCard(cardNumber, cvv, cardDate);
+                debitCards.add(debitCard);
             }
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return debitCards;
     }
 
-    private int getUserIdByUsername(String username) throws SQLException {
-        String selectQuery = "SELECT codUser FROM WebUser WHERE userName = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-        preparedStatement.setString(1, username);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            return resultSet.getInt("codUser");
-        }
-
-        return -1;
-    }
-
 
     //search if the qnt is not 0
     public int checkAvailability(Clothes clothes) {
         int qty = 0;
-
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         String selectQuery = "SELECT * FROM Clothes WHERE codClothes = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(selectQuery);
             preparedStatement.setInt(1, clothes.getCodclothes());
 
             ResultSet resultSet = preparedStatement.executeQuery();
             qty = resultSet.getInt("qty");
+            DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -183,18 +128,19 @@ public class HomePageDAO {
     }
 
     public void updateAvailability(int codclothes, int newqty) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         String query = "UPDATE Clothes SET qty = ? WHERE codClothes = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        try {
+            connection = DataBase.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, newqty);
             preparedStatement.setInt(2, codclothes);
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
 }

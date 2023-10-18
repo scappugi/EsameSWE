@@ -1,6 +1,7 @@
 package DomainModel.Search;
 
 import BuisnessLogic.UnregisteredWebUserController;
+import DataAccess.DataBase;
 import DataAccess.HomePageDAO;
 import DomainModel.Clothes;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ class SearchTest {
     @BeforeEach
     void setUp() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             String delete1 = "DELETE FROM Clothes";
             String delete2 = "DELETE FROM Contains";
             String delete3 = "DELETE FROM DebitCard";
@@ -40,6 +41,7 @@ class SearchTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+            DataBase.closeConnection(connection);
 
 
         } catch (SQLException e) {
@@ -50,28 +52,28 @@ class SearchTest {
 
     @Test
     void searchBase() {
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Clothes (color, category, brand, size,factory, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "red");
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 20);
             preparedStatement.executeUpdate();
-
 
             preparedStatement.setString(1, "red");
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 90);
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -89,15 +91,15 @@ class SearchTest {
 
     @Test
     void searchByPrice() {
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Clothes (color, category, brand, size,factory, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "red");
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 20);
             preparedStatement.executeUpdate();
@@ -107,10 +109,11 @@ class SearchTest {
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 90);
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -124,15 +127,15 @@ class SearchTest {
 
     @Test
     void searchBySize() {
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Clothes (color, category, brand, size,factory, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "red");
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 20);
             preparedStatement.executeUpdate();
@@ -142,10 +145,11 @@ class SearchTest {
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 90);
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -161,15 +165,15 @@ class SearchTest {
 
     @Test
     void searchByBrand() {
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Clothes (color, category, brand, size,factory, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            Connection connection = DataBase.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "red");
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 20);
             preparedStatement.executeUpdate();
@@ -179,10 +183,11 @@ class SearchTest {
             preparedStatement.setString(2, "shirt");
             preparedStatement.setString(3, "brand1");
             preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
+            preparedStatement.setString(5, "f1");
             preparedStatement.setInt(6, 10);
             preparedStatement.setFloat(7, 90);
             preparedStatement.executeUpdate();
+            DataBase.closeConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
