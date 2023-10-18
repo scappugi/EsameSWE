@@ -49,6 +49,45 @@ class SearchTest {
     }
 
     @Test
+    void searchBase() {
+        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:C:/sqlite/ShopOnline.db");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "red");
+            preparedStatement.setString(2, "shirt");
+            preparedStatement.setString(3, "brand1");
+            preparedStatement.setString(4, "m");
+            preparedStatement.setInt(5, 1);
+            preparedStatement.setInt(6, 10);
+            preparedStatement.setFloat(7, 20);
+            preparedStatement.executeUpdate();
+
+
+            preparedStatement.setString(1, "red");
+            preparedStatement.setString(2, "shirt");
+            preparedStatement.setString(3, "brand1");
+            preparedStatement.setString(4, "m");
+            preparedStatement.setInt(5, 1);
+            preparedStatement.setInt(6, 10);
+            preparedStatement.setFloat(7, 90);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        SearchConcrete base = new SearchConcrete("C:/sqlite/ShopOnline.db");
+        ArrayList<Clothes> result = base.searchClothes();
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("red", result.get(0).getColor());
+        assertEquals("shirt", result.get(0).getCategory());
+        assertEquals("brand1", result.get(0).getBrand());
+        assertEquals("m", result.get(0).getSize());
+        assertEquals(20, result.get(0).getPrice());
+    }
+
+
+    @Test
     void searchByPrice() {
         String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
