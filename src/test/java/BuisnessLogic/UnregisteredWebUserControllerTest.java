@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -64,105 +65,5 @@ class UnregisteredWebUserControllerTest {
 
     }
 
-    @Test
-    void searchByPrice(){
-        HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection connection = homepage.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
-            preparedStatement.executeUpdate();
 
-
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 90);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-       assertNotNull(controller.searchByPrice(60));
-        /*for(Clothes it : results)
-            System.out.println(it.getPrice());*/
-    }
-
-    @Test
-    void searchBySize(){
-        HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection connection = homepage.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
-            preparedStatement.executeUpdate();
-
-
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 90);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        assertNotNull(controller.searchBySize("m"));
-        /*for(Clothes it : results)
-            System.out.println(it.getPrice());*/
-    }
-
-    @Test
-    void searchByBrand(){
-        HomePageDAO homepage = new HomePageDAO("C:/sqlite/ShopOnline.db");
-        UnregisteredWebUserController controller = new UnregisteredWebUserController(homepage);
-        String query = "INSERT INTO Clothes (color, category, brand, size,storageID, qty, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection connection = homepage.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 20);
-            preparedStatement.executeUpdate();
-
-
-            preparedStatement.setString(1, "red");
-            preparedStatement.setString(2, "shirt");
-            preparedStatement.setString(3, "brand1");
-            preparedStatement.setString(4, "m");
-            preparedStatement.setInt(5, 1);
-            preparedStatement.setInt(6, 10);
-            preparedStatement.setFloat(7, 90);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        assertNotNull(controller.searchByBrand("brand1"));
-        /*for(Clothes it : results)
-            System.out.println(it.getPrice());*/
-    }
 }

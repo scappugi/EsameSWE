@@ -19,12 +19,12 @@ public class SuperUserController {
             superuser.getFactories().add(factory1);
         }
         if(addFactory("f2")){
-            AbstractFactory factory1 = new ConcreteFactoryBrand1("f2");
-            superuser.getFactories().add(factory1);
+            AbstractFactory factory2 = new ConcreteFactoryBrand2("f2");
+            superuser.getFactories().add(factory2);
         }
         if(addFactory("f3")){
-            AbstractFactory factory1 = new ConcreteFactoryBrand1("f3");
-            superuser.getFactories().add(factory1);
+            AbstractFactory factory3 = new ConcreteFactoryBrand3("f3");
+            superuser.getFactories().add(factory3);
         }
     }
 
