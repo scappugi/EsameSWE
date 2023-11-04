@@ -44,6 +44,34 @@ class RegisteredWebUserControllerTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+
+            String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "user1");
+            preparedStatement.setString(2, "password");
+            preparedStatement.executeUpdate();
+
+            String query1 = "INSERT INTO Orders(codOrder, date, shipmentDate, user) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement7 = connection.prepareStatement(query1);
+            preparedStatement7.setInt(1, 1);
+            preparedStatement7.setDate(2, Date.valueOf(LocalDate.now()));
+            preparedStatement7.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
+            preparedStatement7.setString(4, "user1");
+            preparedStatement7.executeUpdate();
+
+            String query2 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, factory, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement8 = connection.prepareStatement(query2);
+            preparedStatement8.setInt(1, 1);
+            preparedStatement8.setString(2, "red");
+            preparedStatement8.setString(3, "shirt");
+            preparedStatement8.setString(4, "brand1");
+            preparedStatement8.setString(5, "m");
+            preparedStatement8.setString(6, "f1");
+            preparedStatement8.setInt(7, 10);
+            preparedStatement8.setFloat(8, 20);
+            preparedStatement8.executeUpdate();
+
+
             DataBase.closeConnection(connection);
 
         } catch (SQLException e) {
@@ -60,37 +88,8 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
 
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
-        //create order
-        String query1 = "INSERT INTO Orders(codOrder, date, shipmentDate, user) VALUES (?, ?, ?, ?)";
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
-            preparedStatement.setDate(3, Date.valueOf(LocalDate.now().plusDays(3)));
-            preparedStatement.setString(4, "user1");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         controller.accessPrivateArea();
         assertEquals(1, user.getPrivateArea().getOrders().size());
@@ -103,43 +102,9 @@ class RegisteredWebUserControllerTest {
         PrivateAreaDAO privateareadao = new PrivateAreaDAO();
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
-
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        //create clothes
-        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, factory, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, "red");
-            preparedStatement.setString(3, "shirt");
-            preparedStatement.setString(4, "brand1");
-            preparedStatement.setString(5, "m");
-            preparedStatement.setString(6, "f1");
-            preparedStatement.setInt(7, 10);
-            preparedStatement.setFloat(8, 20);
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         Shirt clothes = new Shirt(20, "brand1", "m", "red", 1);
         assertEquals(true, controller.addClothesToCart(clothes, 2));
@@ -158,38 +123,9 @@ class RegisteredWebUserControllerTest {
         //create user
         String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
         Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        //create clothes
-        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, factory, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, "red");
-            preparedStatement.setString(3, "shirt");
-            preparedStatement.setString(4, "brand1");
-            preparedStatement.setString(5, "m");
-            preparedStatement.setString(6, "f1");
-            preparedStatement.setInt(7, 10);
-            preparedStatement.setFloat(8, 20);
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         Shirt clothes = new Shirt(20, "brand1", "m", "red", 1);
         assertEquals(true, controller.addClothesToCart(clothes, 2));
@@ -206,42 +142,9 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
 
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        //create clothes
-        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, factory, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, "red");
-            preparedStatement.setString(3, "shirt");
-            preparedStatement.setString(4, "brand1");
-            preparedStatement.setString(5, "m");
-            preparedStatement.setString(6, "f1");
-            preparedStatement.setInt(7, 10);
-            preparedStatement.setFloat(8, 20);
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         Shirt clothes = new Shirt(20, "brand1", "m", "red", 1);
         assertEquals(true, controller.addClothesToCart(clothes, 2));
@@ -257,43 +160,9 @@ class RegisteredWebUserControllerTest {
         PrivateAreaDAO privateareadao = new PrivateAreaDAO();
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
-
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
-        //create clothes
-        String query1 = "INSERT INTO Clothes(codClothes, COLOR, CATEGORY, BRAND, SIZE, factory, QTY, PRICE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query1);
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, "red");
-            preparedStatement.setString(3, "shirt");
-            preparedStatement.setString(4, "brand1");
-            preparedStatement.setString(5, "m");
-            preparedStatement.setString(6, "f1");
-            preparedStatement.setInt(7, 10);
-            preparedStatement.setFloat(8, 20);
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         Shirt clothes = new Shirt(20, "brand1", "m", "red", 1);
         assertEquals(true, controller.addClothesToCart(clothes, 2));
@@ -309,20 +178,6 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
 
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
@@ -338,20 +193,6 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
 
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 
@@ -368,20 +209,6 @@ class RegisteredWebUserControllerTest {
         RegisteredWebUserController controller = new RegisteredWebUserController(cartdao, homepagedao, privateareadao);
 
 
-        //create user
-        String query = "INSERT INTO WebUser(userName, password) VALUES  (?, ?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "user1");
-            preparedStatement.setString(2, "password");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         RegisteredWebUser user = controller.login("user1", "password");
         controller.setRegisteredwebuser(user);
 

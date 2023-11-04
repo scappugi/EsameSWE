@@ -10,7 +10,7 @@ import java.util.Map;
 public class CartDAO {
 
     private HomePageDAO homepageDAO;
-    private static int codorder = 0;
+    private static int codorder = 1;
     private Connection connection;
 
     public CartDAO(HomePageDAO homepageDAO) {

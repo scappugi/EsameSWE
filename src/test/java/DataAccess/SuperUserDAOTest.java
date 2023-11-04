@@ -39,6 +39,11 @@ class SuperUserDAOTest {
             preparedStatement4.executeUpdate();
             preparedStatement5.executeUpdate();
             preparedStatement6.executeUpdate();
+
+            String query = "INSERT INTO Factory (name) VALUES (?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "f1");
+            preparedStatement.executeUpdate();
             DataBase.closeConnection(connection);
 
 
@@ -54,18 +59,6 @@ class SuperUserDAOTest {
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
-        String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "f1");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
         assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
@@ -78,18 +71,6 @@ class SuperUserDAOTest {
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
-        String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "f1");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
         assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
@@ -104,39 +85,26 @@ class SuperUserDAOTest {
         Clothes clothes = new Shirt(30, "brand1", "m", "red", 1);
         Clothes clothes2 = new Trousers(50, "brand1", "m", "red", 2);
 
-        String query = "INSERT INTO Factory (name) VALUES (?)";
-        Connection connection = null;
-        try {
-            connection = DataBase.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "f1");
-            preparedStatement.executeUpdate();
-            DataBase.closeConnection(connection);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
 
         assertEquals(true, superdao.addNewClothes(clothes, "f1", 10));
         assertEquals(true, superdao.addNewClothes(clothes2, "f1", 20));
-        assertEquals(true, superdao.updateQtyClothes(1,55));
-        assertEquals(false, superdao.updateQtyClothes(5,55));
+        assertEquals(true, superdao.updateQtyClothes(1, 55));
+        assertEquals(false, superdao.updateQtyClothes(5, 55));
 
     }
 
     @Test
     void addFactory() {
         SuperUserDAO superdao = new SuperUserDAO();
+        String query = "INSERT INTO Factory (name) VALUES (?)";
 
-        assertEquals(true, superdao.addFactory("f1"));
+        assertEquals(true, superdao.addFactory("f6"));
     }
 
     @Test
     void removeFactory() {
         SuperUserDAO superdao = new SuperUserDAO();
 
-        assertEquals(true, superdao.addFactory("f1"));
         assertEquals(true, superdao.addFactory("f2"));
         assertEquals(true, superdao.removeFactory("f1"));
 
