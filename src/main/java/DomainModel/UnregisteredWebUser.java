@@ -1,7 +1,7 @@
 package DomainModel;
 
 public class UnregisteredWebUser extends WebUser {
-    private Cart cart;
+    /*private Cart cart;
 
     public UnregisteredWebUser() {
         super();
@@ -10,5 +10,5 @@ public class UnregisteredWebUser extends WebUser {
 
     public Cart getCart(){
         return cart;
-    }
+    }*/
 }
